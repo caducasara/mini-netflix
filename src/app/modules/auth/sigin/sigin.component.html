@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="container_background">
+    <img src="../../../../assets/background-login.jpg" alt="Series and Movies available">
+  </div>
+  <header class="container_header">
+    <img src="../../../assets/lgo.png" alt="Netflix Logo">
+  </header>
+  <form class="container_form" [formGroup]="signInForm" (ngSubmit)="signInSubmit()">
+    <h1>Sign In</h1>
+    <div class="input_container">
+      <label for="email">E-mail:</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="E-mail"
+        formControlName="email"
+      />
+      <ng-container *ngIf="signInForm.controls['email'].touched">
+        <span
+          *ngIf="signInForm.controls['email'].errors"
+        >Incorrect E-mail format!</span>
+      </ng-container>
+    </div>
+    <div class="input_container">
+      <label for="email">Password:</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <ng-container *ngIf="signInForm.controls['password'].touched">
+        <span
+          *ngIf="signInForm.controls['password'].errors"
+        >Min characters not available. Entry your correct password.</span>
+      </ng-container>
+    </div>
+      <span
+        *ngIf="!isUserNotAuthenticated"
+      >Incorrect e-mail and/or password! Try again.</span>
+    <button type="submit">Sign In</button>
+  </form>
+</div>
