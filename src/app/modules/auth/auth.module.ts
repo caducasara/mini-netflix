@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SiginComponent } from './sigin/sigin.component';
+import { SiginComponent } from './singin/singin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 

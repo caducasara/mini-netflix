@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-sigin',
-  templateUrl: './sigin.component.html',
-  styleUrls: ['./sigin.component.scss']
+  selector: 'app-singin',
+  templateUrl: './singin.component.html',
+  styleUrls: ['./singin.component.scss']
 })
 export class SiginComponent implements OnInit {
 
