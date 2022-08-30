@@ -48,6 +48,30 @@
     letter-spacing: 0.5px;
     color: #FFF;
   }
+
+  .subtitle-categorie {
+    text-align: left;
+  }
+}
+
+.not-have-country-metrics {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: #FFF;
+  font-size: 22px;
+  padding: 16px;
+  margin-top: 80px;
+}
+
+.top-per-country {
+  text-align: center;
+
+  .title {
+    font-size: 32px;
+    color: #FFF;
+    margin: 40px auto;
+  }
 }
 
 @media screen and (max-width: 480px) {

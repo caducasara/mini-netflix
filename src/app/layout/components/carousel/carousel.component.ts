@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { getMovies } from 'src/app/database/Movies';
+import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from 'src/app/interfaces/Movie';
 
 @Component({
@@ -9,7 +8,7 @@ import { Movie } from 'src/app/interfaces/Movie';
 })
 export class CarouselComponent implements OnInit {
 
-  slides: Movie[] = [];
+  @Input() movies!: Movie[];
   slideConfig = {
     slidesToShow: 5,
     slidesToScroll: 5,
@@ -56,12 +55,9 @@ export class CarouselComponent implements OnInit {
     ]
   };
 
-
-
   constructor() { }
 
   ngOnInit(): void {
-    this.slides = getMovies();
   }
 
 }

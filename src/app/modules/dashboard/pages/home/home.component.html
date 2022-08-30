@@ -14,17 +14,8 @@
   </div>
 </section>
 
-<section class="movies-list">
-  <h2>Top World</h2>
-  <app-carousel></app-carousel>
+<section class="movies-list" *ngFor="let movie of moviesList">
+  <h2>Top {{ movie.name | titlecase}}</h2>
+  <app-carousel [movies]="movie.movies"></app-carousel>
 </section>
 
-<section class="movies-list">
-  <h2>Drama</h2>
-  <app-carousel></app-carousel>
-</section>
-
-<section class="movies-list">
-  <h2>Fantasy</h2>
-  <app-carousel></app-carousel>
-</section>

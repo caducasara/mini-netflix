@@ -16,3 +16,13 @@ export interface Movie {
     }
   }
 }
+
+export interface MoviesCategories {
+  name: string;
+  movies: Movie[];
+}
+
+export interface TopMoviesCountry {
+  countryName: string;
+  movies: Movie[];
+}

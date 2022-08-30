@@ -4,22 +4,31 @@
       <img src="../../../../../assets/background-login.jpg" alt="Netflix Series">]
     </div>
     <span class="banner_text">
-      See the Top 10 series globally and in each category
+      See the Top series global and in each category
     </span>
   </div>
 
   <section class="movies-list">
-    <h2>Top World</h2>
-    <app-carousel></app-carousel>
+    <h2>world's top series and movies</h2>
+    <app-carousel [movies]="topMoviesGlobal"></app-carousel>
   </section>
 
-  <section class="movies-list">
-    <h2>Drama</h2>
-    <app-carousel></app-carousel>
+  <section
+    *ngIf="topMoviesPerCountry.length > 0"
+    class="top-per-country"
+  >
+    <h2 class="title">Top Movies/Series per Country</h2>
+
+    <div class="movies-list" *ngFor="let country of topMoviesPerCountry">
+      <h2>Top {{ country.countryName | titlecase}}</h2>
+      <app-carousel [movies]="country.movies"></app-carousel>
+    </div>
   </section>
 
-  <section class="movies-list">
-    <h2>Fantasy</h2>
-    <app-carousel></app-carousel>
+  <section
+    *ngIf="topMoviesPerCountry.length <= 0"
+    class="not-have-country-metrics"
+  >
+    <h2>No have Country Metrics to exib :(</h2>
   </section>
 </div>
