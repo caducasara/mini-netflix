@@ -1,8 +1,9 @@
 .card-container {
   height: 500px;
   overflow: hidden;
-  cursor: pointer;
   position: relative;
+  transition: all 0.4s linear;
+  cursor: grab;
 
   img {
     width: 100%;
@@ -11,5 +12,63 @@
     top: 0;
     left: 0;
     object-fit: cover;
+    transition: all 0.4s linear;
+  }
+
+  &:hover {
+    .play-movie {
+      opacity: 1;
+    }
+
+    img {
+      scale: 1.25;
+      filter: brightness(0.5);
+    }
+  }
+
+}
+
+.play-movie {
+  width: 100%;
+  padding: 16px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  opacity: 0;
+  transition: all 0.4s linear;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    color: #FFF;
+    font-weight: 700;
+    max-width: 70%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 0;
+    background-color: #E50914;
+    color: white;
+    transition: all 0.2s linear;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card-container {
+    height: 400px;
   }
 }

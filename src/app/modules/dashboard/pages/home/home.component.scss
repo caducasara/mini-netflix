@@ -1,3 +1,8 @@
+.home-container {
+  width: 100%;
+  overflow: hidden;
+}
+
 .banner {
   position: relative;
   width: 100vw;
@@ -62,6 +67,7 @@
 }
 
 .movies-list {
+  display: block;
   padding: 0px 50px;
   margin-top: 50px;
 

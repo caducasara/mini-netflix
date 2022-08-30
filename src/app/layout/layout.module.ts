@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
   imports: [
     CommonModule,
     RouterModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    MatIconModule
   ],
   exports: [
     HeaderComponent,

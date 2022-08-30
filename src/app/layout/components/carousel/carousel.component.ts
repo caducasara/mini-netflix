@@ -13,6 +13,8 @@ export class CarouselComponent implements OnInit {
   slideConfig = {
     slidesToShow: 5,
     slidesToScroll: 5,
+    nextArrow: false,
+    prevArrow: false,
     dots: false,
     infinite: false,
     responsive: [
@@ -45,7 +47,7 @@ export class CarouselComponent implements OnInit {
         }
       },
       {
-        breakpoint: 767,
+        breakpoint: 570,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -53,6 +55,8 @@ export class CarouselComponent implements OnInit {
       },
     ]
   };
+
+
 
   constructor() { }
 
