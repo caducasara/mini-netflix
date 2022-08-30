@@ -1,0 +1,10 @@
+<div class="carousel-container">
+  <ngx-slick-carousel class="carousel"
+    #slickModal="slick-carousel"
+    [config]="slideConfig"
+  >
+    <div ngxSlickItem *ngFor="let slide of slides" class="slides-container">
+      <app-movie-card [movie]="slide"></app-movie-card>
+    </div>
+  </ngx-slick-carousel>
+</div>

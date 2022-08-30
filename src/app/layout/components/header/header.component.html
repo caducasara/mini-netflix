@@ -1,0 +1,30 @@
+<header>
+  <div class="center">
+    <img class="header_logo" src="../../../../assets/lgo.png" alt="Netflix Logo">
+    <div class="header_menu">
+      <nav>
+        <a
+          [routerLink]="['/']"
+          [routerLinkActiveOptions]="{exact: true}"
+          routerLinkActive="active-link"
+        >Home</a>
+        <a
+          [routerLink]="['/metrics']"
+          [routerLinkActiveOptions]="{exact: true}"
+          routerLinkActive="active-link"
+        >Metrics</a>
+      </nav>
+
+      <a
+        [routerLink]="['/profile']"
+
+      >
+        <img
+          class="profile-picture"
+          src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+          alt="User profile picture"
+        >
+      </a>
+    </div>
+  </div>
+</header>
