@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NetflixService } from 'src/app/service/netflix.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  userProfilePicture!: string;
+
+  constructor(
+    private netflix: NetflixService
+  ) { }
 
   ngOnInit(): void {
+    const { picture } = this.netflix.getUserLogged();
+    this.userProfilePicture = picture as string;
   }
 
 }

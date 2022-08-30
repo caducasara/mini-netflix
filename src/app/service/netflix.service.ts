@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { getMovies } from '../database/Movies';
 import { getUsers } from '../database/Users';
 import { Categories } from '../ENUMS/categories';
-import { Movie, MoviesCategories } from '../interfaces/Movie';
-import { User, UserData } from '../interfaces/User';
-import { sortArr } from '../utils/sortMoviesArray';
+import { Countries } from '../ENUMS/countries';
+import { Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
+import { User, UserData, UserMoviesWatched } from '../interfaces/User';
+import { sortArr, sortArrByCountries } from '../utils/sortMoviesArray';
 
 @Injectable({
   providedIn: 'root'
@@ -63,4 +64,65 @@ export class NetflixService {
 
     return topGlobal;
   }
+
+  getTopMoviesPerCountry() {
+    const movies = getMovies();
+    const moviesSort = this.getMoviesSort(movies);
+    let topMoviesPerCountry: TopMoviesCountry[] = [];
+
+    for (let country in Countries) {
+      const moviesSorted = sortArrByCountries(moviesSort, country as Countries);
+      topMoviesPerCountry.push({ countryName: country, movies: [...moviesSorted] })
+    }
+
+    return topMoviesPerCountry;
+  }
+
+  updateMoviesWatched(movieId: number) {
+    const { email } = JSON.parse(localStorage.getItem('Netflix_user') as string);
+    let usersData = JSON.parse(localStorage.getItem('users') as string);
+
+    if (!usersData) usersData = [];
+
+    const hasUser = usersData.find((user: UserData) => user.userEmail === email);
+
+    if (!hasUser) {
+      const userFormated = {
+        userEmail:  email,
+        movies: []
+      }
+
+      usersData.push(userFormated);
+      localStorage.setItem('users', JSON.stringify(usersData));
+    }
+
+    const userIndex = usersData
+      .findIndex((user: UserData) => user.userEmail === email);
+    const movieIndex = usersData[userIndex].movies
+      .findIndex((movie: UserMoviesWatched) => movie.movieId === movieId);
+
+    if (movieIndex === -1) {
+      usersData[userIndex].movies.push({ movieId, views: 1 });
+    } else {
+      usersData[userIndex].movies[movieIndex].views++;
+    }
+
+    localStorage.setItem('users', JSON.stringify(usersData));
+  }
+
+  getUserLogged(): User{
+    const users = getUsers();
+    const { email } = JSON.parse(localStorage.getItem('Netflix_user') as string);
+    const user = users.find(user => user.email === email) as User;
+
+    return user;
+  }
+
+  getMovieById(movieId: number): Movie{
+    const movies = getMovies();
+    const findMovie = movies.find(movie => movie.id === movieId) as Movie;
+
+    return findMovie;
+  }
+
 }

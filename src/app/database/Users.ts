@@ -2,7 +2,7 @@ export const getUsers = () => (
   [
     {
       id: 1,
-      FirstName: 'User',
+      firstName: 'User',
       lastName: '1',
       email: 'user1@teste.com',
       password: 'teste1',
@@ -11,7 +11,7 @@ export const getUsers = () => (
     },
     {
       id: 2,
-      FirstName: 'User',
+      firstName: 'User',
       lastName: '2',
       email: 'user2@teste.com',
       password: 'teste2',
@@ -20,7 +20,7 @@ export const getUsers = () => (
     },
     {
       id: 3,
-      FirstName: 'User',
+      firstName: 'User',
       lastName: '3',
       email: 'user3@teste.com',
       password: 'teste3',

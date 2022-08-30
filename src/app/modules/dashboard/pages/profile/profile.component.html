@@ -1,11 +1,11 @@
 <div class="profile-container">
   <div class="profile">
     <div class="profile_wrapper">
-      <img class="profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="">
+      <img class="profile-picture" [src]="user.picture" alt="User profile picture">
       <div class="profile_infos">
-        <span><strong>Name:</strong> Nome Completo</span>
-        <span><strong>E-mail:</strong> email@teste.com</span>
-        <span><strong>Country:</strong> Brazil</span>
+        <span><strong>Name:</strong> {{user.firstName}} {{user.lastName}}</span>
+        <span><strong>E-mail:</strong> {{user.email}}</span>
+        <span><strong>Country:</strong> {{user.country}}</span>
 
       </div>
     </div>

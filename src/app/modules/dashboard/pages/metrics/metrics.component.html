@@ -9,7 +9,7 @@
   </div>
 
   <section class="movies-list">
-    <h2>world's top series and movies</h2>
+    <h2 class="title">world's top series and movies</h2>
     <app-carousel [movies]="topMoviesGlobal"></app-carousel>
   </section>
 
@@ -20,7 +20,7 @@
     <h2 class="title">Top Movies/Series per Country</h2>
 
     <div class="movies-list" *ngFor="let country of topMoviesPerCountry">
-      <h2>Top {{ country.countryName | titlecase}}</h2>
+      <h2 class="subtitle-categorie">Top {{ country.countryName }}</h2>
       <app-carousel [movies]="country.movies"></app-carousel>
     </div>
   </section>
@@ -30,5 +30,17 @@
     class="not-have-country-metrics"
   >
     <h2>No have Country Metrics to exib :(</h2>
+  </section>
+
+  <section
+    *ngIf="topMoviesPerCountry.length > 0"
+    class="top-per-country"
+  >
+    <h2 class="title">Top Movies/Series per Category</h2>
+
+    <div class="movies-list" *ngFor="let category of topMoviesPerCategory">
+      <h2 class="subtitle-categorie">Top {{ category.name | titlecase}}</h2>
+      <app-carousel [movies]="category.movies"></app-carousel>
+    </div>
   </section>
 </div>

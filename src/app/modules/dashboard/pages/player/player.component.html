@@ -1,0 +1,31 @@
+<div class="player-container">
+  <div class="player_video">
+    <!-- <youtube-player videoId="dQw4w9WgXcQ" [height]="" [width]="">
+    </youtube-player> -->
+  </div>
+  <div class="about-movie">
+    <img [src]="movie.folder" [alt]="movie.title">
+    <div class="info-container">
+      <div class="wrapper">
+        <span>Name:</span>
+        <p>{{ movie.title }}</p>
+      </div>
+      <div class="wrapper">
+        <span>Synopsi:</span>
+        <p>{{ movie.synopsi }}</p>
+      </div>
+      <div class="wrapper">
+        <span>Categories:</span>
+        <p>{{ movie.category }}</p>
+      </div>
+      <div class="wrapper">
+        <span>Year:</span>
+        <p>{{ movie.year }}</p>
+      </div>
+      <div class="wrapper">
+        <span>Watched:</span>
+        <p>{{ movie.watchedNumber.total }}</p>
+      </div>
+    </div>
+  </div>
+</div>

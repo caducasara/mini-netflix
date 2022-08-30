@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/interfaces/User';
+import { NetflixService } from 'src/app/service/netflix.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  user!: User;
+
+  constructor(
+    private netflix: NetflixService
+  ) { }
 
   ngOnInit(): void {
+    this.user =  this.netflix.getUserLogged();
   }
 
 }

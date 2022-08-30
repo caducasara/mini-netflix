@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Movie } from 'src/app/interfaces/Movie';
+import { NetflixService } from 'src/app/service/netflix.service';
 
 @Component({
   selector: 'app-movie-card',
@@ -10,9 +12,17 @@ export class MovieCardComponent implements OnInit {
 
   @Input() movie!: Movie;
 
-  constructor() { }
+  constructor(
+    private netflix: NetflixService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  handleClickPLayMovie(movieID: number){
+    this.netflix.updateMoviesWatched(movieID);
+    this.router.navigate(['/player', movieID]);
   }
 
 }

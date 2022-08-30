@@ -6,7 +6,8 @@ import { LayoutModule } from 'src/app/layout/layout.module';
 import { HomeComponent } from './pages/home/home.component';
 import { MetricsComponent } from './pages/metrics/metrics.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-
+import { PlayerComponent } from './pages/player/player.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 
 @NgModule({
@@ -14,12 +15,14 @@ import { ProfileComponent } from './pages/profile/profile.component';
     MainComponent,
     HomeComponent,
     MetricsComponent,
-    ProfileComponent
+    ProfileComponent,
+    PlayerComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    LayoutModule
+    LayoutModule,
+    YouTubePlayerModule
   ]
 })
 export class DashboardModule { }
