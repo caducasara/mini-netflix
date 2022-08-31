@@ -11,8 +11,9 @@ export interface Movie {
   watchedNumber: {
     total: number;
     countries: {
-      [Countries.BR]: number;
+      [Countries.Brazil]: number;
       [Countries.USA]: number;
+      [Countries.Argentina]: number;
     }
   }
 }

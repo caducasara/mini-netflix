@@ -26,8 +26,8 @@ export class PlayerComponent implements OnInit {
     const { id } = this.activatedRoute.snapshot.params;
 
     this.movie = this.netflix.getMovieById(Number(id));
-    this.movieUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/DotnJ7tTA34');
-    console.log(this.movie)
+    this.movieUrlSafe = this.sanitizer
+      .bypassSecurityTrustResourceUrl(this.movie.trailer);
   }
 
 }

@@ -7,7 +7,7 @@ export const getUsers = () => (
       email: 'user1@teste.com',
       password: 'teste1',
       picture: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png',
-      country: 'BR'
+      country: 'Brazil'
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ export const getUsers = () => (
       email: 'user3@teste.com',
       password: 'teste3',
       picture: 'https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg',
-      country: 'ARG'
+      country: 'Argentina'
     }
   ]
 )

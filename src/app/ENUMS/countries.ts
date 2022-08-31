@@ -1,5 +1,5 @@
 export enum Countries {
-  BR = 'BR',
+  Brazil = 'Brazil',
   USA = 'USA',
-  // ARG = 'ARG'
+  Argentina = 'Argentina'
 }

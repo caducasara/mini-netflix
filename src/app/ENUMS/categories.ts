@@ -1,7 +1,7 @@
 export enum Categories {
-  fantasy = 'FANTASY',
-  drama = 'DRAMA',
-  action = 'ACTION',
-  animation = 'ANIMATION',
-  comedy = 'COMEDY',
+  Fantasy = 'FANTASY',
+  Drama = 'DRAMA',
+  Action = 'ACTION',
+  Animation = 'ANIMATION',
+  Comedy = 'COMEDY',
 }
