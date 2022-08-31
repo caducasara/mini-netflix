@@ -51,6 +51,21 @@
   }
 }
 
+.users-list {
+  width: 100vw;
+  padding: 16px 50px;
+  margin-top: 50px;
+
+  .title-users {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    text-align: center;
+    color: #FFF;
+    margin: 20px auto;
+  }
+}
+
 .not-have-country-metrics {
   width: 100%;
   height: 100%;
@@ -71,8 +86,9 @@
   font-size: 42px;
   font-weight: 700;
   text-align: center;
+  line-height: 40px;
   color: #FFF;
-  margin: 40px auto;
+  margin: 20px auto;
 }
 
 @media screen and (max-width: 1064px) {

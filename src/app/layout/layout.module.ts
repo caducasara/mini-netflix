@@ -6,12 +6,16 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { MatIconModule } from '@angular/material/icon';
+import { UsersRankComponent } from './components/users-rank/users-rank.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     CarouselComponent,
-    MovieCardComponent
+    MovieCardComponent,
+    UsersRankComponent,
+    UserCardComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   exports: [
     HeaderComponent,
-    CarouselComponent
+    CarouselComponent,
+    UsersRankComponent,
   ]
 })
 export class LayoutModule { }

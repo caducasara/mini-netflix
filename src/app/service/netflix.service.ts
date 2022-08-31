@@ -4,8 +4,8 @@ import { getUsers } from '../database/Users';
 import { Categories } from '../ENUMS/categories';
 import { Countries } from '../ENUMS/countries';
 import { Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
-import { User, UserData, UserMoviesWatched } from '../interfaces/User';
-import { sortArr, sortArrByCountries } from '../utils/sortMoviesArray';
+import { User, UserData, UserMoviesWatched, UserWatchedMoviesCount } from '../interfaces/User';
+import { sortArr, sortArrByCountries, sortUserMoviesCountArr } from '../utils/sortMoviesArray';
 
 @Injectable({
   providedIn: 'root'
@@ -123,6 +123,23 @@ export class NetflixService {
     const findMovie = movies.find(movie => movie.id === movieId) as Movie;
 
     return findMovie;
+  }
+
+  getUsersMoreWatchedMovies(): UserWatchedMoviesCount[] {
+    const users = localStorage.getItem('users')
+      ? JSON.parse(localStorage.getItem('users') as string) : [];
+
+    const userMoviesWatchedCount = users.map((user: UserData) => {
+      return {
+        userEmail: user.userEmail,
+        moviesWatchedCount: user.movies.length
+      }
+    })
+
+    const sortUserMoviesWatchedCount = userMoviesWatchedCount
+      .sort(sortUserMoviesCountArr);
+
+    return sortUserMoviesWatchedCount;
   }
 
 }

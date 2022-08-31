@@ -25,3 +25,8 @@ export interface UserMoviesWatched {
   movieId: number;
   views: number;
 }
+
+export interface UserWatchedMoviesCount {
+  userEmail: string;
+  moviesWatchedCount: number;
+}
