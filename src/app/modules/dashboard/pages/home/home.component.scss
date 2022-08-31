@@ -108,3 +108,9 @@
     height: 700px;
   }
 }
+
+@media screen and (max-width: 420px) {
+  .movies-list {
+    padding: 0px 16px;
+  }
+}

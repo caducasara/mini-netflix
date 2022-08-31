@@ -9,8 +9,8 @@
   </div>
 
   <section class="movies-list">
-    <h2 class="title">world's top series and movies</h2>
-    <app-carousel [movies]="topMoviesGlobal"></app-carousel>
+    <h2 class="title">World's top series and movies</h2>
+    <app-carousel [movies]="topMoviesGlobal" [showRank]="true"></app-carousel>
   </section>
 
   <section
@@ -21,7 +21,7 @@
 
     <div class="movies-list" *ngFor="let country of topMoviesPerCountry">
       <h2 class="subtitle-categorie">Top {{ country.countryName }}</h2>
-      <app-carousel [movies]="country.movies"></app-carousel>
+      <app-carousel [movies]="country.movies" [showRank]="true"></app-carousel>
     </div>
   </section>
 
@@ -40,7 +40,7 @@
 
     <div class="movies-list" *ngFor="let category of topMoviesPerCategory">
       <h2 class="subtitle-categorie">Top {{ category.name | titlecase}}</h2>
-      <app-carousel [movies]="category.movies"></app-carousel>
+      <app-carousel [movies]="category.movies" [showRank]="true"></app-carousel>
     </div>
   </section>
 </div>

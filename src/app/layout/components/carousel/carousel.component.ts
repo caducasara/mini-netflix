@@ -9,6 +9,8 @@ import { Movie } from 'src/app/interfaces/Movie';
 export class CarouselComponent implements OnInit {
 
   @Input() movies!: Movie[];
+  @Input() showRank: boolean = false;
+
   slideConfig = {
     slidesToShow: 5,
     slidesToScroll: 5,

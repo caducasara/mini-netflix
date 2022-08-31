@@ -44,6 +44,7 @@
 
   span {
     color: #FFF;
+    font-size: 22px;
     font-weight: 700;
     max-width: 70%;
     text-overflow: ellipsis;
@@ -52,8 +53,8 @@
   }
 
   button {
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 0;
     background-color: #E50914;
@@ -64,6 +65,29 @@
     &:hover {
       filter: brightness(0.8);
     }
+  }
+}
+
+.movie-rank {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(229, 9, 20, 1) 0%, rgba(229, 9, 20, 0.5) 100%);
+  font-size: 32px;
+  font-weight: 700;
+  color: #FFF;
+  border-radius: 0px 0px 0px 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  sup {
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: underline;
   }
 }
 

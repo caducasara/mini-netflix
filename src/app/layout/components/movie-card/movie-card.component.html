@@ -8,4 +8,7 @@
       <mat-icon aria-hidden="false" aria-label="Play Movie Icon" fontIcon="play_arrow"></mat-icon>
     </button>
   </div>
+  <div class="movie-rank" *ngIf="exibPosition">
+    <span>{{ position }}<sup>0</sup></span>
+  </div>
 </div>

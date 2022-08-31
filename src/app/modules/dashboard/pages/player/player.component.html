@@ -1,30 +1,34 @@
 <div class="player-container">
   <div class="player_video">
-    <!-- <youtube-player videoId="dQw4w9WgXcQ" [height]="" [width]="">
-    </youtube-player> -->
+    <iframe
+      width="100%"
+      height="100%"
+      [src]="movieUrlSafe"
+      [title]="movie.title"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
   </div>
   <div class="about-movie">
     <img [src]="movie.folder" [alt]="movie.title">
     <div class="info-container">
       <div class="wrapper">
-        <span>Name:</span>
-        <p>{{ movie.title }}</p>
+        <span class="movie-title">{{ movie.title }}</span>
+        <div class="separator"></div>
+        <p class="synopsi">{{ movie.synopsi }}</p>
       </div>
-      <div class="wrapper">
-        <span>Synopsi:</span>
-        <p>{{ movie.synopsi }}</p>
+      <div class="wrapper inline">
+        <span class="subtitle">Categories:</span>
+        <p class="subtitle-content">{{ movie.category }}</p>
       </div>
-      <div class="wrapper">
-        <span>Categories:</span>
-        <p>{{ movie.category }}</p>
+      <div class="wrapper inline">
+        <span class="subtitle">Year:</span>
+        <p class="subtitle-content">{{ movie.year }}</p>
       </div>
-      <div class="wrapper">
-        <span>Year:</span>
-        <p>{{ movie.year }}</p>
-      </div>
-      <div class="wrapper">
-        <span>Watched:</span>
-        <p>{{ movie.watchedNumber.total }}</p>
+      <div class="wrapper inline">
+        <span class="subtitle">Watched:</span>
+        <p class="subtitle-content">{{ movie.watchedNumber.total }}</p>
       </div>
     </div>
   </div>

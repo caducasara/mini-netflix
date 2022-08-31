@@ -3,8 +3,8 @@
     #slickModal="slick-carousel"
     [config]="slideConfig"
   >
-    <div ngxSlickItem *ngFor="let movie of movies" class="slides-container">
-      <app-movie-card [movie]="movie"></app-movie-card>
+    <div ngxSlickItem *ngFor="let movie of movies, let i = index" class="slides-container">
+      <app-movie-card [movie]="movie" [position]="i + 1" [exibPosition]="showRank"></app-movie-card>
     </div>
   </ngx-slick-carousel>
 
