@@ -130,9 +130,12 @@ export class NetflixService {
       ? JSON.parse(localStorage.getItem('users') as string) : [];
 
     const userMoviesWatchedCount = users.map((user: UserData) => {
+      const totalMoviesWatchedCount = user.movies
+        .reduce((acc, act) => acc + act.views, 0);
+
       return {
         userEmail: user.userEmail,
-        moviesWatchedCount: user.movies.length
+        moviesWatchedCount: totalMoviesWatchedCount
       }
     })
 

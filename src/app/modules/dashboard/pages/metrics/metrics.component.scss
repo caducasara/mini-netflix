@@ -111,7 +111,15 @@
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 425px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .users-list .title-users {
+    font-size: 22px;
+  }
+
   .movies-list {
     padding: 0px 16px;
   }

@@ -88,24 +88,27 @@
   .banner_about
   {
     max-width: 100%;
-    margin: 0 16px;
+    margin: 0 50px;
+
     h3 {
-    font-size: 90px;
-  }}
+      line-height: 65px;
+      font-size: 45px;
+    }
+  }
 
   .banner {
     height: 700px;
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .banner_about h3 {
-    line-height: 65px;
-    font-size: 45px;
+@media screen and (max-width: 425px) {
+  .banner_about
+  {
+    margin: 0 16px;
   }
 
-  .banner {
-    height: 700px;
+  .movies-list {
+    padding: 0px 16px;
   }
 }
 
