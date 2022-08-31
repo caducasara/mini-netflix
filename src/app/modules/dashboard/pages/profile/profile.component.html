@@ -2,15 +2,15 @@
   <div class="profile">
     <div class="profile_wrapper">
       <img class="profile-picture" [src]="user.picture" alt="User profile picture">
-      <div class="profile_infos">
-        <span><strong>Name:</strong> {{user.firstName}} {{user.lastName}}</span>
-        <span><strong>E-mail:</strong> {{user.email}}</span>
-        <span><strong>Country:</strong> {{user.country}}</span>
-
+      <div class="profile-wrapper_infos">
+        <div class="infos">
+          <span><strong>Name:</strong> {{user.firstName}} {{user.lastName}}</span>
+          <span><strong>E-mail:</strong> {{user.email}}</span>
+          <span><strong>Country:</strong> {{user.country}}</span>
+        </div>
+        <button class="logout" (click)="handleClickLogout()">Logout</button>
       </div>
     </div>
-    <div class="movies-watched">
-      <span class="not-movies-wathed">No movies watched so far :(</span>
-    </div>
+
   </div>
 </div>

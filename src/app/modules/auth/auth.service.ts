@@ -37,6 +37,11 @@ export class AuthService {
     this.isUserAuthenticated = false;
   }
 
+  logout(){
+    localStorage.removeItem('Netflix_user');
+    this.router.navigate(['/singin']);
+  }
+
   getUserAuthenticated(): boolean {
     return this.isUserAuthenticated;
   }

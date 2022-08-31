@@ -1,6 +1,6 @@
 .profile-container {
   width: 100vw;
-  padding: 32px 16px;
+  padding: 0 16px;
 
   display: flex;
   align-items: center;
@@ -10,8 +10,10 @@
 .profile {
   width: 100%;
   max-width: 1200px;
-  border-radius: 8px;
   margin-top: 100px;
+  padding: 16px;
+  border: 1px solid #CCC;
+  border-radius: 8px;
 
   display: flex;
   flex-direction: column;
@@ -20,7 +22,6 @@
 
 .profile_wrapper {
   width: 100%;
-  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +32,18 @@
   height: 300px;
 }
 
-.profile_infos {
+.profile-wrapper_infos {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.infos {
   display: flex;
   height: 100%;
   flex: 1;
@@ -43,20 +55,21 @@
   font-size: 18px;
 }
 
-.movies-watched {
+.logout {
   width: 100%;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #CCC;
+  height: 42px;
+  border: 0;
   border-radius: 8px;
-}
-
-.not-movies-wathed {
+  background-color: #e50914;
   color: #FFF;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
+  transition: filter 0.4s linear;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -73,9 +86,15 @@
   .profile-picture {
     height: 150px;
   }
+}
 
-  .movies-watched {
-    min-height: 300px;
+@media screen and (max-width: 425px) {
+  .profile-container {
+    padding: 50px 16px;
+  }
+
+  .profile-wrapper_infos {
+    min-height: 0;
   }
 }
 
@@ -85,10 +104,6 @@
   }
 
   .profile_infos {
-    font-size: 16px;
-  }
-
-  .not-movies-wathed {
     font-size: 16px;
   }
 }
