@@ -10,7 +10,7 @@ import { NetflixService } from 'src/app/service/netflix.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user!: User;
+  user: User = {} as User;
 
   constructor(
     private netflix: NetflixService,

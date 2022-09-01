@@ -8,6 +8,6 @@ import { User } from 'src/app/interfaces/User';
 })
 export class UserCardComponent {
 
-  @Input() user!: User;
+  @Input() user: User = {} as User;
   @Input() position!: number;
 }

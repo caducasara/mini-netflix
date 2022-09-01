@@ -8,7 +8,7 @@ import { NetflixService } from 'src/app/service/netflix.service';
 })
 export class HeaderComponent implements OnInit {
 
-  userProfilePicture!: string;
+  userProfilePicture: string = '';
 
   constructor(
     private netflix: NetflixService

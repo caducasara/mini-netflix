@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test-coverage": "ng test --code-coverage"
+    "test-coverage": "ng test --code-coverage",
+    "e2e": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +35,7 @@
     "@angular/cli": "~14.1.1",
     "@angular/compiler-cli": "^14.1.0",
     "@types/jasmine": "~4.0.0",
+    "cypress": "^10.7.0",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

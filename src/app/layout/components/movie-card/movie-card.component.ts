@@ -10,7 +10,7 @@ import { NetflixService } from 'src/app/service/netflix.service';
 })
 export class MovieCardComponent implements OnInit {
 
-  @Input() movie!: Movie;
+  @Input() movie: Movie = {} as Movie;
   @Input() exibPosition!: boolean;
   @Input() position!: number;
 

@@ -8,7 +8,7 @@ import { Movie } from 'src/app/interfaces/Movie';
 })
 export class CarouselComponent {
 
-  @Input() movies!: Movie[];
+  @Input() movies: Movie[] = [] as Movie[];
   @Input() showRank: boolean = false;
 
   slideConfig = {

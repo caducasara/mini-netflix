@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SiginComponent } from './singin.component';
 
 describe('SiginComponent', () => {
@@ -14,6 +13,7 @@ describe('SiginComponent', () => {
 
     fixture = TestBed.createComponent(SiginComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
