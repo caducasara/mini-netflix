@@ -14,9 +14,8 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate()
+    {
 
       const users = getUsers();
       const hasUserInLocalStorage = JSON.parse(localStorage.getItem('Netflix_user') as string);

@@ -106,7 +106,7 @@ describe('NetflixService', () => {
   afterEach(function() {
     localStorage.removeItem('Netflix_user');
     localStorage.removeItem('users');
-})
+  })
 
   it('should be created', () => {
     expect(service).toBeTruthy();
