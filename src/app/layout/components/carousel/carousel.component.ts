@@ -6,7 +6,7 @@ import { Movie } from 'src/app/interfaces/Movie';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent {
 
   @Input() movies!: Movie[];
   @Input() showRank: boolean = false;
@@ -56,10 +56,5 @@ export class CarouselComponent implements OnInit {
       },
     ]
   };
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

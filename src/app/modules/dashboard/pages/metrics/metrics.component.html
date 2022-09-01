@@ -8,9 +8,9 @@
     </span>
   </div>
 
-  <section class="users-list">
+  <section class="users-list" *ngIf="topUsersMoreWatchMovies.length > 0">
     <h2 class="title-users">Top 3 users who most watched movies/series</h2>
-    <app-users-rank></app-users-rank>
+    <app-users-rank [users]="topUsersMoreWatchMovies"></app-users-rank>
   </section>
 
   <section class="movies-list">

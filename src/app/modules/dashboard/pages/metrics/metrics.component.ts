@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { getUsers } from 'src/app/database/Users';
 import { Movie, MoviesCategories, TopMoviesCountry } from 'src/app/interfaces/Movie';
-import { User, UserWatchedMoviesCount } from 'src/app/interfaces/User';
+import { User } from 'src/app/interfaces/User';
 import { NetflixService } from 'src/app/service/netflix.service';
 
 @Component({
@@ -34,10 +34,10 @@ export class MetricsComponent implements OnInit {
     const usersMock = getUsers();
     const usersData = this.netflix.getUsersMoreWatchedMovies();
     const usersFormated = usersData.map(user => {
-      const findUser = usersMock.find(userMocked => userMocked.email === user.userEmail);
+    const findUser = usersMock.find(userMocked => userMocked.email === user.userEmail);
 
       return findUser as User;
-    });
+    }).slice(0, 3);
 
     return usersFormated;
   }
