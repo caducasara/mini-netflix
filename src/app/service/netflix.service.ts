@@ -12,8 +12,6 @@ import { sortArr, sortArrByCountries, sortUserMoviesCountArr } from '../utils/so
 })
 export class NetflixService {
 
-  constructor() { }
-
   getMoviesByCategory(category: string) {
     const movies = getMovies();
     const moviesCategory: Movie[] = movies.filter(movie => movie.category === category);
@@ -60,7 +58,7 @@ export class NetflixService {
   getTopMoviesGlobal() {
     const movies = getMovies();
     const moviesSort = this.getMoviesSort(movies);
-    const topGlobal = moviesSort.sort(sortArr)
+    const topGlobal = moviesSort.sort(sortArr);
 
     return topGlobal;
   }
