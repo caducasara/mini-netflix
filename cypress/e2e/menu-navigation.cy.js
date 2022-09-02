@@ -24,7 +24,7 @@ describe('test user menu navigation', () => {
 
   it('Navigate to menu Home', () => {
 
-    cy.get('a[href="/"').click();
+    cy.get('a[href="/"]:contains(Home)').click();
     cy.url().should('be.equal', 'http://localhost:4200/');
   });
 

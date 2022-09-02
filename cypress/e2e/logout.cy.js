@@ -18,7 +18,7 @@ describe('test user menu navigation', () => {
   it('User logout correctly', () => {
 
     cy.get('.logout').click();
-    cy.url().should('be.equal', 'http://localhost:4200/singin');
+    cy.url().should('be.equal', 'http://localhost:4200/signin');
   });
 
 });

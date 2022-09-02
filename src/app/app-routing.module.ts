@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './modules/auth/auth.guard';
-import { SiginComponent } from './modules/auth/singin/singin.component';
+import { SiginComponent } from './modules/auth/signin/signin.component';
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
-    path:'singin',
+    path:'signin',
     component: SiginComponent
   }
 ];

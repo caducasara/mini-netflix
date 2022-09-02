@@ -51,6 +51,6 @@ describe('AuthGuard', () => {
   it('(U) canActivate() -> Should not to allow access the route if AuthService not authenticated user', () => {
     spyOn(authService, 'getUserAuthenticated').and.returnValue(false);
     expect(guard.canActivate()).toBeFalsy();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/singin']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/signin']);
   });
 });

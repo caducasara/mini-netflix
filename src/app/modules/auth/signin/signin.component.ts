@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-singin',
-  templateUrl: './singin.component.html',
-  styleUrls: ['./singin.component.scss']
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.scss']
 })
 export class SiginComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class SiginComponent implements OnInit {
       const user = this.signInForm.value;
 
       this.authService.signIn(user);
-      this.isUserNotAuthenticated = this.authService.getUserAuthenticated();
+      this.isUserNotAuthenticated = !this.authService.getUserAuthenticated();
       return;
     }
 

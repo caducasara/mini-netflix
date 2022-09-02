@@ -43,7 +43,7 @@ describe('AuthService', () => {
     const hasUserIsLocalStorage = localStorage.getItem('Netflix_user');
 
     expect(hasUserIsLocalStorage).toBeFalsy();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/singin']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/signin']);
   });
 
   it('(U) getUserAuthenticated() -> Should return isUserAuthenticated', () => {
