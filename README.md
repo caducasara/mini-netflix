@@ -64,6 +64,10 @@ To access the application you will have to login with one of these mocked user c
 
 OBS: With these credentials you can freely access the application and switch users whenever you want. Any credentials other than these will not work.
 
+# How to access this application?
+
+You can access this application from any browser through the link https://mini-netflix-liard.vercel.app/, access the application and have fun :D.
+
 
 # How to start the project:
 
