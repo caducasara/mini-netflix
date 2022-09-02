@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  mini-netflix:
+    container_name: mini-netflix_container
+    build: ./
+    restart: always
+    expose:
+     - '4200'
+    ports:
+     - '4200:80'

@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test-coverage": "ng test --code-coverage",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "compose": "docker compose up --build",
+    "dev": "ng serve --open"
   },
   "private": true,
   "dependencies": {
