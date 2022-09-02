@@ -39,7 +39,7 @@
     </div>
       <span
         class="incorrect-user-credential"
-        *ngIf="!isUserNotAuthenticated"
+        *ngIf="isUserNotAuthenticated"
       >Incorrect e-mail and/or password! Try again.</span>
     <button type="submit">Sign In</button>
   </form>

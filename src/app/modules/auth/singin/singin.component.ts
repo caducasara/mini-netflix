@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class SiginComponent implements OnInit {
 
   signInForm: FormGroup = new FormGroup({});
-  isUserNotAuthenticated: boolean = true;
+  isUserNotAuthenticated: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,5 +36,7 @@ export class SiginComponent implements OnInit {
       this.isUserNotAuthenticated = this.authService.getUserAuthenticated();
       return;
     }
+
+    this.isUserNotAuthenticated = true;
   }
 }
