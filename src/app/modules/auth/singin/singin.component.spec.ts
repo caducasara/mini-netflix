@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { SiginComponent } from './singin.component';
 
 describe('SiginComponent', () => {
@@ -7,7 +8,8 @@ describe('SiginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SiginComponent ]
+      declarations: [ SiginComponent ],
+      providers: [FormBuilder]
     })
     .compileComponents();
 

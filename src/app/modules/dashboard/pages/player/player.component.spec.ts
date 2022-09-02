@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { PlayerComponent } from './player.component';
 
@@ -8,7 +9,13 @@ describe('PlayerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlayerComponent ]
+      declarations: [ PlayerComponent ],
+      providers: [{ provide: ActivatedRoute, useValue: {
+        snapshot: {
+          params: { id: '1' }
+        }
+      }
+    }]
     })
     .compileComponents();
 

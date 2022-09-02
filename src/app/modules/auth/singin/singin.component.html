@@ -17,6 +17,7 @@
       />
       <ng-container *ngIf="signInForm.controls['email'].touched">
         <span
+        class="email-incorrect"
           *ngIf="signInForm.controls['email'].errors"
         >Incorrect E-mail format!</span>
       </ng-container>
@@ -31,11 +32,13 @@
       />
       <ng-container *ngIf="signInForm.controls['password'].touched">
         <span
+          class="inocrrect-password"
           *ngIf="signInForm.controls['password'].errors"
         >Min characters not available. Entry your correct password.</span>
       </ng-container>
     </div>
       <span
+        class="incorrect-user-credential"
         *ngIf="!isUserNotAuthenticated"
       >Incorrect e-mail and/or password! Try again.</span>
     <button type="submit">Sign In</button>
