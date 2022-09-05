@@ -30,7 +30,6 @@ export class AuthService {
       }
 
       localStorage.setItem('Netflix_user', JSON.stringify(saveUser));
-      this.router.navigate(['/']);
       return;
     }
 
@@ -39,7 +38,6 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem('Netflix_user');
-    this.router.navigate(['/signin']);
   }
 
   getUserAuthenticated(): boolean {

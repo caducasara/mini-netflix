@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/modules/auth/auth.service';
 import { NetflixService } from 'src/app/service/netflix.service';
@@ -16,7 +17,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private netflix: NetflixService,
     private auth: AuthService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +27,7 @@ export class ProfileComponent implements OnInit {
 
   handleClickLogout(){
     this.auth.logout();
+    this.router.navigate(['/signin']);
   }
 
   back() {
