@@ -1,4 +1,4 @@
-import { Countries } from "../ENUMS/countries";
+import { Countries } from "../enums/countries";
 import { Movie } from "../interfaces/Movie";
 import { UserWatchedMoviesCount } from "../interfaces/User";
 

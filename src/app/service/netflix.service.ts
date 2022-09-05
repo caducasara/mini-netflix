@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { getMovies } from '../database/Movies';
 import { getUsers } from '../database/Users';
-import { Categories } from '../ENUMS/categories';
-import { Countries } from '../ENUMS/countries';
+import { Categories } from '../enums/categories';
+import { Countries } from '../enums/countries';
 import { Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
 import { User, UserData, UserMoviesWatched, UserWatchedMoviesCount } from '../interfaces/User';
 import { sortArr, sortArrByCountries, sortUserMoviesCountArr } from '../utils/sortMoviesArray';

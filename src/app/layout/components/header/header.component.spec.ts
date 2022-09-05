@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Countries } from 'src/app/ENUMS/countries';
+import { Countries } from 'src/app/enums/countries';
 import { NetflixService } from 'src/app/service/netflix.service';
 
 import { HeaderComponent } from './header.component';

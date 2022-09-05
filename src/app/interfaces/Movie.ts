@@ -1,4 +1,4 @@
-import { Countries } from "../ENUMS/countries";
+import { Countries } from "../enums/countries";
 
 export interface Movie {
   id: number;
