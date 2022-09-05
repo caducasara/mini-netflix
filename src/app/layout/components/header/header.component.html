@@ -5,7 +5,7 @@
     >
       <img class="header_logo" src="../../../../assets/lgo.png" alt="Netflix Logo">
     </a>
-    <div class="header_menu">
+    <div class="header_menu desktop">
       <nav>
         <a
           [routerLink]="['/']"
@@ -28,6 +28,39 @@
           alt="User profile picture"
         >
       </a>
+    </div>
+
+    <div class="header_menu mobile">
+      <button  class="mobile-menu" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item class="menu-mobile_item">
+          <a
+            [routerLink]="['/']"
+            [routerLinkActiveOptions]="{exact: true}"
+            routerLinkActive="active-link"
+          >Home</a>
+        </button>
+        <button mat-menu-item class="menu-mobile_item">
+          <a
+            [routerLink]="['/metrics']"
+            [routerLinkActiveOptions]="{exact: true}"
+            routerLinkActive="active-link"
+          >Metrics</a>
+        </button>
+        <button mat-menu-item class="menu-mobile_item">
+          <a
+            [routerLink]="['/profile']"
+          >
+            <img
+              class="profile-picture"
+              [src]="userProfilePicture"
+              alt="User profile picture"
+            >
+          </a>
+        </button>
+      </mat-menu>
     </div>
   </div>
 </header>
