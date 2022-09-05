@@ -8,7 +8,7 @@ import { MetricsComponent } from './pages/metrics/metrics.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PlayerComponent } from './pages/player/player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     CommonModule,
     DashboardRoutingModule,
     LayoutModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    MatIconModule
   ]
 })
 export class DashboardModule { }

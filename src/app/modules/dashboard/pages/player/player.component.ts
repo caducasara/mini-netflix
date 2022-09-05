@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +18,8 @@ export class PlayerComponent implements OnInit {
   constructor(
     private netflix: NetflixService,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -30,4 +32,7 @@ export class PlayerComponent implements OnInit {
       .bypassSecurityTrustResourceUrl(this.movie.trailer);
   }
 
+  back() {
+    this.location.back()
+  }
 }
