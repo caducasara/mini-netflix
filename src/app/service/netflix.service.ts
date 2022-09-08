@@ -27,7 +27,7 @@ export class NetflixService {
     for (let category in Categories) {
       const movies = this.getMoviesByCategory(category);
       const moviesSort = this.getMoviesSort(movies);
-      const moviesSorted = moviesSort.sort(sortArr)
+      const moviesSorted = moviesSort.sort(sortArr);
       movieData = [...movieData, { name: category, movies: [...moviesSorted] }]
     }
 
@@ -37,7 +37,7 @@ export class NetflixService {
   getMoviesSort(movies: Movie[]) {
     const usersData = getUsers();
     const users: UserData[] = localStorage.getItem('users')
-      ? JSON.parse(localStorage.getItem('users') as string) : [];
+    ? JSON.parse(localStorage.getItem('users') as string) : [];
 
     users.forEach(user => {
      const { country } = usersData.find(userList => userList.email === user.userEmail) as User;
