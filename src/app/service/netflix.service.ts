@@ -35,6 +35,7 @@ export class NetflixService {
   }
 
   getMoviesSort(movies: Movie[]) {
+
     const usersData = getUsers();
     const users: UserData[] = localStorage.getItem('users')
     ? JSON.parse(localStorage.getItem('users') as string) : [];
@@ -142,5 +143,4 @@ export class NetflixService {
 
     return sortUserMoviesWatchedCount;
   }
-
 }
