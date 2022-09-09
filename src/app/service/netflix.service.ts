@@ -21,11 +21,16 @@ export class NetflixService {
   }
 
   getCategoriesMovies(): MoviesCategories[] {
-
+    // buscar array de metricas no localStorage
     let movieData: MoviesCategories[] = [];
 
     for (let category in Categories) {
       const movies = this.getMoviesByCategory(category);
+      // array com as metricas dos filmes da categoria
+      // ordenar metricas dos filmes -> const moviesSorted = moviesSort.sort(sortArr);
+      // buscar filmes referente as metricas
+
+      //remover
       const moviesSort = this.getMoviesSort(movies);
       const moviesSorted = moviesSort.sort(sortArr);
       movieData = [...movieData, { name: category, movies: [...moviesSorted] }]
@@ -34,6 +39,7 @@ export class NetflixService {
     return movieData;
   }
 
+  // remover função que nao vai ser utilizada
   getMoviesSort(movies: Movie[]) {
 
     const usersData = getUsers();
