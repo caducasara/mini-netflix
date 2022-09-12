@@ -53,7 +53,6 @@ export class NetflixService {
       topMoviesGLobal.push(movies.find(movie => movie.id === metric.movieId) as Movie);
     });
 
-    console.log('global',topMoviesGLobal);
     return topMoviesGLobal;
   }
 
