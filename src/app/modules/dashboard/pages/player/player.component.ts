@@ -14,6 +14,7 @@ export class PlayerComponent implements OnInit {
 
   movie!: Movie;
   movieUrlSafe!:SafeResourceUrl;
+  totalMovieWatched!: number;
 
   constructor(
     private netflix: NetflixService,
@@ -30,6 +31,7 @@ export class PlayerComponent implements OnInit {
     this.movie = this.netflix.getMovieById(Number(id));
     this.movieUrlSafe = this.sanitizer
       .bypassSecurityTrustResourceUrl(this.movie.trailer);
+    this.totalMovieWatched = this.netflix.getMetricsById(Number(id));
   }
 
   back() {
