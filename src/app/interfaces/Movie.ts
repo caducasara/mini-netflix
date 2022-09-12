@@ -8,14 +8,6 @@ export interface Movie {
   year: string;
   category: string;
   trailer: string;
-  watchedNumber: {
-    total: number;
-    countries: {
-      [Countries.Brazil]: number;
-      [Countries.USA]: number;
-      [Countries.Argentina]: number;
-    }
-  }
 }
 
 export interface MoviesCategories {
@@ -26,4 +18,16 @@ export interface MoviesCategories {
 export interface TopMoviesCountry {
   countryName: string;
   movies: Movie[];
+}
+
+export interface Metrics {
+  movieId: number;
+  watchedNumber: {
+    total: number;
+    countries: {
+      [Countries.Brazil]: number;
+      [Countries.USA]: number;
+      [Countries.Argentina]: number;
+    }
+  }
 }
