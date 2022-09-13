@@ -1,13 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Movie } from '../interfaces/Movie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getAllMovies() {
-
+  get getMovies(): Observable<Movie[]> {
+    return this.http.get<Movie[]>('assets/database/movies.json');
   }
 }

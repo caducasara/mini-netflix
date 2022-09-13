@@ -25,8 +25,10 @@ export class MetricsComponent implements OnInit {
 
     this.topMoviesPerCountry = this.netflix.getTopMoviesPerCountry();
     this.topMoviesGlobal = this.netflix.getTopMoviesGlobal();
-    this.topMoviesPerCategory = this.netflix.getCategoriesMovies();
     this.topUsersMoreWatchMovies = this.getUserInfos();
+    this.netflix.getCategoriesMovies.subscribe(categoriesMovieList => {
+      this.topMoviesPerCategory = categoriesMovieList;
+    });
   }
 
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { forkJoin, map, Observable } from 'rxjs';
 import { getMetrics } from '../database/Metrics';
 import { getMovies } from '../database/Movies';
 import { getUsers } from '../database/Users';
@@ -7,39 +8,55 @@ import { Countries } from '../enums/countries';
 import { Metrics, Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
 import { User, UserData, UserMoviesWatched, UserWatchedMoviesCount } from '../interfaces/User';
 import { metricsSortArr, sortMetricsArrByCountries, sortUserMoviesCountArr } from '../utils/sortMoviesArray';
+import { DbService } from './db.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetflixService {
 
-  getMoviesByCategory(category: string) {
-    const movies = getMovies();
-    const moviesCategory: Movie[] = movies.filter(movie => movie.category === category);
+  constructor(private dbService: DbService){}
 
-    return moviesCategory;
+  getMoviesByCategory(category: string): Observable<Movie[]> {
+    return this.dbService.getMovies.pipe(
+      map(movies => {
+        const moviesCategory: Movie[] = movies.filter(movie => movie.category === category);
+        return moviesCategory;
+      })
+    );
   }
 
-  getCategoriesMovies(): MoviesCategories[] {
+  get getCategoriesMovies(): Observable<MoviesCategories[]> {
+
     const metrics: Metrics[] = this.getMetrics();
-    let movieData: MoviesCategories[] = [];
+    let requestMoviesCategoriesResponse: Observable<Movie[]>[] = [];
 
     for (let category in Categories) {
-      const movies = this.getMoviesByCategory(category);
-      const moviesMetrics = metrics.filter(metric => {
-        return movies.find(movie => movie.id === metric.movieId);
-      });
-      const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
-      const moviesSorted = [] as Movie[];
-
-      orderMoviesMetrics.forEach(metric => {
-        moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
-      });
-
-      movieData = [...movieData, { name: category, movies: [...moviesSorted] }]
+      requestMoviesCategoriesResponse.push(this.getMoviesByCategory(category));
     }
 
-    return movieData;
+    return forkJoin(requestMoviesCategoriesResponse).pipe(
+      map(moviesCategories => {
+        let moviesData: MoviesCategories[] = [];
+
+        for(let movies of moviesCategories){
+          const category = movies[0].category;
+          const moviesMetrics = metrics.filter(metric => {
+            return movies.find(movie => movie.id === metric.movieId);
+          });
+          const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
+          let moviesSorted = [] as Movie[];
+
+          orderMoviesMetrics.forEach(metric => {
+            moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
+          });
+
+          moviesData = [...moviesData, { name: category, movies: [...moviesSorted] }]
+        }
+
+        return moviesData;
+      })
+    );
   }
 
   getTopMoviesGlobal() {
