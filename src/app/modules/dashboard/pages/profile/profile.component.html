@@ -1,4 +1,4 @@
-<div class="profile-container">
+<section class="profile-container">
   <div class="player-menu-navigate">
     <a (click)="back()">
       <mat-icon>keyboard_backspace</mat-icon> Back
@@ -17,4 +17,14 @@
       </div>
     </div>
   </div>
-</div>
+
+  <div class="profile">
+    <div class="movies-watched">
+      <h2 class="title">Most watched movies by the user</h2>
+      <app-carousel
+        [movies]="moviesMoreWatched"
+        [showRank]="true"
+      ></app-carousel>
+    </div>
+  </div>
+</section>
