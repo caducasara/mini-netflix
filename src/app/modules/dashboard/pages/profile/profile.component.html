@@ -19,12 +19,16 @@
   </div>
 
   <div class="profile">
-    <div class="movies-watched">
+    <div class="movies-watched" *ngIf="moviesMoreWatched.length">
       <h2 class="title">Most watched movies by the user</h2>
       <app-carousel
         [movies]="moviesMoreWatched"
         [showRank]="true"
       ></app-carousel>
+    </div>
+
+    <div class="no-have-movies" *ngIf="!moviesMoreWatched.length">
+      <span>No movies watched</span>
     </div>
   </div>
 </section>

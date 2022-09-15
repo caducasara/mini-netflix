@@ -27,20 +27,20 @@ export class NetflixService {
 
   get getCategoriesMovies(): Observable<MoviesCategories[]> {
 
-    const metrics: Metrics[] = this.getMetrics();
+    const metrics = this.dbService.getMetrics;
     let requestMoviesCategoriesResponse: Observable<Movie[]>[] = [];
 
     for (let category in Categories) {
       requestMoviesCategoriesResponse.push(this.getMoviesByCategory(category));
     }
 
-    return forkJoin(requestMoviesCategoriesResponse).pipe(
-      map(moviesCategories => {
+    return forkJoin([metrics, ...requestMoviesCategoriesResponse]).pipe(
+      map(([metricsResponse, ...moviesCategories]) => {
         let moviesData: MoviesCategories[] = [];
 
         for (let movies of moviesCategories) {
           const category = movies[0].category;
-          const moviesMetrics = metrics.filter(metric => {
+          const moviesMetrics = metricsResponse.filter(metric => {
             return movies.find(movie => movie.id === metric.movieId);
           });
           const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
@@ -56,6 +56,77 @@ export class NetflixService {
         return moviesData;
       })
     );
+
+    // return this.dbService.getMetrics.pipe(
+    //   map(metrics => {
+    //     let dataMoviesCategories: MoviesCategories[] = [];
+
+    //     let requestMoviesCategoriesResponse: Observable<Movie[]>[] = [];
+
+    //     for (let category in Categories) {
+    //       requestMoviesCategoriesResponse.push(this.getMoviesByCategory(category));
+    //     }
+
+    //     const teste = forkJoin(requestMoviesCategoriesResponse).pipe(
+    //       map(moviesCategories => {
+    //         let moviesData: MoviesCategories[] = [];
+
+    //         for (let movies of moviesCategories) {
+    //           const category = movies[0].category;
+    //           const moviesMetrics = metrics.filter(metric => {
+    //             return movies.find(movie => movie.id === metric.movieId);
+    //           });
+    //           const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
+    //           let moviesSorted = [] as Movie[];
+
+    //           orderMoviesMetrics.forEach(metric => {
+    //             moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
+    //           });
+
+    //           moviesData = [...moviesData, { name: category, movies: [...moviesSorted] }]
+    //         }
+
+    //         return moviesData;
+    //       })
+    //     )
+
+    //     teste.subscribe(teste => {
+    //       dataMoviesCategories =  teste;
+    //     });
+
+    //     return dataMoviesCategories;
+    //   })
+    // );
+
+    // const metrics: Metrics[] = this.getMetrics();
+    // let requestMoviesCategoriesResponse: Observable<Movie[]>[] = [];
+
+    // for (let category in Categories) {
+    //   requestMoviesCategoriesResponse.push(this.getMoviesByCategory(category));
+    // }
+
+    // return forkJoin(requestMoviesCategoriesResponse).pipe(
+    //   map(moviesCategories => {
+    //     let moviesData: MoviesCategories[] = [];
+
+    //     for (let movies of moviesCategories) {
+    //       const category = movies[0].category;
+    //       const moviesMetrics = metrics.filter(metric => {
+    //         return movies.find(movie => movie.id === metric.movieId);
+    //       });
+    //       const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
+    //       let moviesSorted = [] as Movie[];
+
+    //       orderMoviesMetrics.forEach(metric => {
+    //         moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
+    //       });
+
+    //       moviesData = [...moviesData, { name: category, movies: [...moviesSorted] }]
+    //     }
+
+    //     return moviesData;
+    //   })
+    // );
   }
 
   get getTopMoviesGlobal(): Observable<Movie[]> {
@@ -171,7 +242,7 @@ export class NetflixService {
     return of(sortUserMoviesWatchedCount);
   }
 
-  get topUsersMoreWatchMovies(): Observable<User[]>{
+  get topUsersMoreWatchMovies(): Observable<User[]> {
     return this.getUsersMoreWatchedMovies.pipe(
       map(users => {
         const usersMock = getUsers();
@@ -186,25 +257,28 @@ export class NetflixService {
     );
   }
 
-  getMoviesMoreWatchedByUser(userEmail: string): Observable<Movie[]>{
+  getMoviesMoreWatchedByUser(userEmail: string): Observable<Movie[]> {
     const users = localStorage.getItem('users')
       ? JSON.parse(localStorage.getItem('users') as string)
       : [];
 
     const user = users.find((user: UserData) => user.userEmail === userEmail);
-    user.movies.sort(sortUserMoreMoviesWatchedArr);
 
     return this.dbService.getMovies.pipe(
       map(movies => {
         let moviesWatched: Movie[] = [];
 
-        user.movies.forEach((userMovieWatched: UserMoviesWatched) => {
-          movies.forEach(movie => {
-            if(userMovieWatched.movieId === movie.id){
-              moviesWatched.push(movie)
-            }
+        if(user){
+          user.movies.sort(sortUserMoreMoviesWatchedArr);
+
+          user.movies.forEach((userMovieWatched: UserMoviesWatched) => {
+            movies.forEach(movie => {
+              if (userMovieWatched.movieId === movie.id) {
+                moviesWatched.push(movie)
+              }
+            })
           })
-        })
+        }
 
         return moviesWatched;
       })

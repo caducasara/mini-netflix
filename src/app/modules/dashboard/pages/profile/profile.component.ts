@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user =  this.netflix.getUserLogged();
+    this.user = this.netflix.getUserLogged();
 
     this.subscriptionMoviesMorewatched.add(
       this.netflix.getMoviesMoreWatchedByUser(this.user.email as string)
