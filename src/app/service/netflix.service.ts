@@ -6,7 +6,7 @@ import { Categories } from '../enums/categories';
 import { Countries } from '../enums/countries';
 import { Metrics, Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
 import { User, UserData, UserMoviesWatched, UserWatchedMoviesCount } from '../interfaces/User';
-import { metricsSortArr, sortMetricsArrByCountries, sortUserMoviesCountArr } from '../utils/sortMoviesArray';
+import { metricsSortArr, sortMetricsArrByCountries, sortUserMoreMoviesWatchedArr, sortUserMoviesCountArr } from '../utils/sortMoviesArray';
 import { DbService } from './db.service';
 
 @Injectable({
@@ -182,6 +182,31 @@ export class NetflixService {
         }).slice(0, 3);
 
         return usersFormated;
+      })
+    );
+  }
+
+  getMoviesMoreWatchedByUser(userEmail: string): Observable<Movie[]>{
+    const users = localStorage.getItem('users')
+      ? JSON.parse(localStorage.getItem('users') as string)
+      : [];
+
+    const user = users.find((user: UserData) => user.userEmail === userEmail);
+    user.movies.sort(sortUserMoreMoviesWatchedArr);
+
+    return this.dbService.getMovies.pipe(
+      map(movies => {
+        let moviesWatched: Movie[] = [];
+
+        user.movies.forEach((userMovieWatched: UserMoviesWatched) => {
+          movies.forEach(movie => {
+            if(userMovieWatched.movieId === movie.id){
+              moviesWatched.push(movie)
+            }
+          })
+        })
+
+        return moviesWatched;
       })
     );
   }
