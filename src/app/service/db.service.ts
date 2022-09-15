@@ -29,10 +29,8 @@ export class DbService {
       ? JSON.parse(localStorage.getItem('users') as string)
       : [];
 
-      const user = users.find((user: UserData) => user.userEmail === userEmail);
-      user.movies.sort(sortUserMoreMoviesWatchedArr);
-
-      console.log(user.movies)
+    const user = users.find((user: UserData) => user.userEmail === userEmail);
+    user.movies.sort(sortUserMoreMoviesWatchedArr);
 
     return this.getMovies.pipe(
       map(movies => {
