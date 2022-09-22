@@ -15,8 +15,9 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const { picture } = this.netflix.getUserLogged();
-    this.userProfilePicture = picture as string;
+    this.netflix.getUserLogged.subscribe(user => {
+      this.userProfilePicture = user.picture as string;
+    });
   }
 
 }

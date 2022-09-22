@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   user: User = {} as User;
   moviesMoreWatched: Movie[] = [];
 
-  subscriptionMoviesMorewatched: Subscription = new Subscription();
+  subscriptionUserInfos: Subscription = new Subscription();
 
   constructor(
     private netflix: NetflixService,
@@ -28,18 +28,22 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = this.netflix.getUserLogged();
 
-    this.subscriptionMoviesMorewatched.add(
-      this.netflix.getMoviesMoreWatchedByUser(this.user.email as string)
-        .subscribe(movies => {
-          this.moviesMoreWatched = movies;
-        })
-    )
+    this.subscriptionUserInfos.add(
+      this.netflix.getUserLogged.subscribe(
+        user => {
+          this.user = user;
+          this.netflix.getMoviesMoreWatchedByUser(this.user.email as string)
+            .subscribe(movies => {
+              this.moviesMoreWatched = movies;
+            })
+        }
+      )
+    );
   }
 
   ngOnDestroy() {
-    this.subscriptionMoviesMorewatched.unsubscribe();
+    this.subscriptionUserInfos.unsubscribe();
   }
 
   handleClickLogout(){

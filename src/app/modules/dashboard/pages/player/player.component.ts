@@ -34,7 +34,9 @@ export class PlayerComponent implements OnInit {
     this.subscriptionMovie.add(
       this.netflix.getMovieById(Number(id)).subscribe(movie => {
         this.movie = movie;
-        this.totalMovieWatched = this.netflix.getMetricsById(Number(id));
+        this.netflix.getMetricsById(Number(id)).subscribe(totalMovieWatched => {
+          this.totalMovieWatched = totalMovieWatched;
+        });
         this.movieUrlSafe = this.sanitizer
           .bypassSecurityTrustResourceUrl(this.movie.trailer);
       })
