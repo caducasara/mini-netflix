@@ -1,11 +1,18 @@
-<div class="card-container">
+<div
+  class="card-container"
+  [ngClass]="{'card-container_second-heigth': routeActive === 'profile'}"
+>
   <img src="{{movie.folder}}" alt="{{movie.title}}">
   <div class="play-movie">
     <span>
       {{movie.title}}
     </span>
     <button (click)="handleClickPLayMovie(movie.id)">
-      <mat-icon aria-hidden="false" aria-label="Play Movie Icon" fontIcon="play_arrow"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Play Movie Icon"
+        fontIcon="play_arrow"
+      ></mat-icon>
     </button>
   </div>
   <div class="movie-rank" *ngIf="exibPosition">

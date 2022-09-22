@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from 'src/app/interfaces/Movie';
 import { NetflixService } from 'src/app/service/netflix.service';
 
@@ -14,12 +14,18 @@ export class MovieCardComponent implements OnInit {
   @Input() exibPosition!: boolean;
   @Input() position!: number;
 
+  routeActive!: string;
+
   constructor(
     private netflix: NetflixService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.routeActive = this.route.snapshot.url[0]?.path
+      ? this.route.snapshot.url[0].path
+      : '/';
   }
 
   handleClickPLayMovie(movieID: number){

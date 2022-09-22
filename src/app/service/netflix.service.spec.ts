@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { getMovies } from '../database/Movies';
+import { getMovies } from '../tests/mocks/Movies';
 import { getUsers } from '../database/Users';
 import { User, UserWatchedMoviesCount } from '../interfaces/User';
 

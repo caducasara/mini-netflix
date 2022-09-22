@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MoviesCategories } from 'src/app/interfaces/Movie';
 import { NetflixService } from 'src/app/service/netflix.service';
 
@@ -10,6 +11,7 @@ import { NetflixService } from 'src/app/service/netflix.service';
 export class HomeComponent implements OnInit {
 
   moviesList: MoviesCategories[] = [];
+  subscriptionMovieList: Subscription = new Subscription();
 
   constructor(
     private netFlix: NetflixService
@@ -18,6 +20,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
-    this.moviesList = this.netFlix.getCategoriesMovies();
+    this.subscriptionMovieList.add(
+      this.netFlix.getCategoriesMovies.subscribe(moviesCategoriesList => {
+        this.moviesList = moviesCategoriesList;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptionMovieList.unsubscribe();
   }
 }

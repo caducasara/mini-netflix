@@ -1,180 +1,69 @@
 import { Injectable } from '@angular/core';
-import { getMetrics } from '../database/Metrics';
-import { getMovies } from '../database/Movies';
-import { getUsers } from '../database/Users';
-import { Categories } from '../enums/categories';
-import { Countries } from '../enums/countries';
-import { Metrics, Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
-import { User, UserData, UserMoviesWatched, UserWatchedMoviesCount } from '../interfaces/User';
-import { metricsSortArr, sortMetricsArrByCountries, sortUserMoviesCountArr } from '../utils/sortMoviesArray';
+import { Observable } from 'rxjs';
+import { Movie, MoviesCategories, TopMoviesCountry } from '../interfaces/Movie';
+import { User, UserWatchedMoviesCount } from '../interfaces/User';
+import { DbService } from './db.service';
+import { LocalStorageService } from './local-storage.service';
+import { MetricsService } from './metrics.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetflixService {
 
-  getMoviesByCategory(category: string) {
-    const movies = getMovies();
-    const moviesCategory: Movie[] = movies.filter(movie => movie.category === category);
+  constructor(
+    private dbService: DbService,
+    private metricsService: MetricsService,
+    private localStorageService: LocalStorageService,
+    private userService: UsersService
+  ) { }
 
-    return moviesCategory;
+  getMoviesByCategory(category: string): Observable<Movie[]> {
+    return this.metricsService.getMoviesByCategory(category);
   }
 
-  getCategoriesMovies(): MoviesCategories[] {
-    const metrics: Metrics[] = this.getMetrics();
-    let movieData: MoviesCategories[] = [];
-
-    for (let category in Categories) {
-      const movies = this.getMoviesByCategory(category);
-      const moviesMetrics = metrics.filter(metric => {
-        return movies.find(movie => movie.id === metric.movieId);
-      });
-      const orderMoviesMetrics = moviesMetrics.sort(metricsSortArr);
-      const moviesSorted = [] as Movie[];
-
-      orderMoviesMetrics.forEach(metric => {
-        moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
-      });
-
-      movieData = [...movieData, { name: category, movies: [...moviesSorted] }]
-    }
-
-    return movieData;
+  get getCategoriesMovies(): Observable<MoviesCategories[]> {
+    return this.metricsService.getCategoriesMovies;
   }
 
-  getTopMoviesGlobal() {
-    const metrics: Metrics[] = this.getMetrics();
-    const movies = getMovies();
-
-    const topMoviesGlobalMetricsSorted = metrics.sort(metricsSortArr);
-    const topMoviesGLobal = [] as Movie[];
-
-    topMoviesGlobalMetricsSorted.forEach(metric => {
-      topMoviesGLobal.push(movies.find(movie => movie.id === metric.movieId) as Movie);
-    });
-
-    return topMoviesGLobal;
+  get getTopMoviesGlobal(): Observable<Movie[]> {
+    return this.metricsService.getTopMoviesGlobal;
   }
 
-  getTopMoviesPerCountry() {
-    const metrics: Metrics[] = this.getMetrics();
-    const movies = getMovies();
-    const topMoviesMetricsSorted = metrics.sort(metricsSortArr);
-    let topMoviesPerCountry: TopMoviesCountry[] = [];
-
-    for (let country in Countries) {
-      const metricsSorted = sortMetricsArrByCountries(topMoviesMetricsSorted, country as Countries);
-      const moviesSorted = [] as Movie[];
-
-      metricsSorted.forEach(metric => {
-        moviesSorted.push(movies.find(movie => movie.id === metric.movieId) as Movie);
-      });
-
-      topMoviesPerCountry.push({ countryName: country, movies: [...moviesSorted] })
-    }
-
-    return topMoviesPerCountry;
+  get getTopMoviesPerCountry(): Observable<TopMoviesCountry[]> {
+    return this.metricsService.getTopMoviesPerCountry;
   }
 
   updateMoviesWatched(movieId: number) {
-    const { email } = JSON.parse(localStorage.getItem('Netflix_user') as string);
-    let usersData = JSON.parse(localStorage.getItem('users') as string);
-
-    if (!usersData) usersData = [];
-
-    const hasUser = usersData.find((user: UserData) => user.userEmail === email);
-
-    if (!hasUser) {
-      const userFormated = {
-        userEmail:  email,
-        movies: []
+    this.metricsService.updateMoviesWatchedMetrics(movieId).subscribe(
+      newMoviesWatchedMetrics => {
+        this.localStorageService.updatedMoviesWatchedLocalStorage(newMoviesWatchedMetrics);
       }
-
-      usersData.push(userFormated);
-      localStorage.setItem('users', JSON.stringify(usersData));
-    }
-
-    const userIndex = usersData
-      .findIndex((user: UserData) => user.userEmail === email);
-    const movieIndex = usersData[userIndex].movies
-      .findIndex((movie: UserMoviesWatched) => movie.movieId === movieId);
-
-    if (movieIndex === -1) {
-      usersData[userIndex].movies.push({ movieId, views: 1 });
-    } else {
-      usersData[userIndex].movies[movieIndex].views++;
-    }
-
-    this.updatedMetrics(movieId, email);
-
-    localStorage.setItem('users', JSON.stringify(usersData));
+    );
   }
 
-  getUserLogged(): User{
-    const users = getUsers();
-    const { email } = JSON.parse(localStorage.getItem('Netflix_user') as string);
-    const user = users.find(user => user.email === email) as User;
-
-    return user;
+  get getUserLogged(): Observable<User> {
+    return this.userService.getUserLogged
   }
 
-  getMovieById(movieId: number): Movie{
-    const movies = getMovies();
-    const findMovie = movies.find(movie => movie.id === movieId) as Movie;
-
-    return findMovie;
+  getMovieById(movieId: number): Observable<Movie> {
+    return this.dbService.getMovieById(movieId);
   }
 
-  getUsersMoreWatchedMovies(): UserWatchedMoviesCount[] {
-    const users = localStorage.getItem('users')
-      ? JSON.parse(localStorage.getItem('users') as string) : [];
-
-    const userMoviesWatchedCount = users.map((user: UserData) => {
-      const totalMoviesWatchedCount = user.movies
-        .reduce((acc, act) => acc + act.views, 0);
-
-      return {
-        userEmail: user.userEmail,
-        moviesWatchedCount: totalMoviesWatchedCount
-      }
-    })
-
-    const sortUserMoviesWatchedCount = userMoviesWatchedCount
-      .sort(sortUserMoviesCountArr);
-
-    return sortUserMoviesWatchedCount;
+  get getUsersMoreWatchedMovies(): Observable<UserWatchedMoviesCount[]> {
+    return this.metricsService.getUsersMoreWatchedMovies;
   }
 
-  getMetrics(){
-    const hasMetrics = localStorage.getItem('metrics');
-
-    if(!hasMetrics){
-      localStorage.setItem('metrics', JSON.stringify(getMetrics()));
-
-      return getMetrics();
-    }
-
-    return JSON.parse(hasMetrics);
+  get topUsersMoreWatchMovies(): Observable<User[]> {
+    return this.metricsService.topUsersMoreWatchMovies;
   }
 
-  updatedMetrics(movieId: Number, userEmail: string){
-    let metrics = this.getMetrics();
-    const users = getUsers();
-    const { country } = users.find(user => user.email === userEmail) as User;
-    const metricsIndex = metrics.findIndex((metric: Metrics) => metric.movieId === movieId);
-
-    if(metricsIndex !== -1){
-      metrics[metricsIndex].watchedNumber.total += 1;
-      metrics[metricsIndex].watchedNumber.countries[country] += 1;
-    }
-
-    localStorage.setItem('metrics', JSON.stringify(metrics));
+  getMoviesMoreWatchedByUser(userEmail: string): Observable<Movie[]> {
+    return this.userService.getMoviesMoreWatchedByUser(userEmail);
   }
 
-  getMetricsById(movieId: number): number {
-    const metrics = this.getMetrics()
-      .find((metrics: Metrics) => metrics.movieId === movieId);
-    const watchedNumber = metrics.watchedNumber.total;
-    return watchedNumber;
+  getMetricsById(movieId: number): Observable<number> {
+    return this.metricsService.getMetricsById(movieId);
   }
 }

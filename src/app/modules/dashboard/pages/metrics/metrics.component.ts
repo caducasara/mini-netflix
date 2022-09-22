@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map, Observable, Subscription } from 'rxjs';
 import { getUsers } from 'src/app/database/Users';
 import { Movie, MoviesCategories, TopMoviesCountry } from 'src/app/interfaces/Movie';
 import { User } from 'src/app/interfaces/User';
@@ -16,6 +17,11 @@ export class MetricsComponent implements OnInit {
   topMoviesGlobal: Movie[] = [];
   topUsersMoreWatchMovies: User[] = [];
 
+  subscriptionTopMoviesPerCountry: Subscription =  new Subscription();
+  subscriptionTopMoviesPerCategory: Subscription =  new Subscription();
+  subscriptionTopMoviesGlobal: Subscription =  new Subscription();
+  subscriptionGetUserInfos: Subscription =  new Subscription();
+
   constructor(
     private netflix: NetflixService,
   ) { }
@@ -23,22 +29,37 @@ export class MetricsComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
-    this.topMoviesPerCountry = this.netflix.getTopMoviesPerCountry();
-    this.topMoviesGlobal = this.netflix.getTopMoviesGlobal();
-    this.topMoviesPerCategory = this.netflix.getCategoriesMovies();
-    this.topUsersMoreWatchMovies = this.getUserInfos();
+    this.subscriptionTopMoviesPerCountry.add(
+      this.netflix.getTopMoviesPerCountry.subscribe(topMoviesPerContry => {
+        this.topMoviesPerCountry = topMoviesPerContry;
+      })
+    );
+
+    this.subscriptionTopMoviesGlobal.add(
+      this.netflix.getTopMoviesGlobal.subscribe(topGlobalMovies => {
+        this.topMoviesGlobal = topGlobalMovies;
+      })
+    );
+
+    this.subscriptionTopMoviesPerCategory.add(
+      this.netflix.getCategoriesMovies.subscribe(categoriesMovieList => {
+        this.topMoviesPerCategory = categoriesMovieList;
+      })
+    );
+
+
+    this.subscriptionGetUserInfos.add(
+      this.netflix.topUsersMoreWatchMovies.subscribe(usersMoreWatchedMovies => {
+        this.topUsersMoreWatchMovies = usersMoreWatchedMovies;
+      })
+    );
   }
 
-
-  getUserInfos(): User[]{
-    const usersMock = getUsers();
-    const usersData = this.netflix.getUsersMoreWatchedMovies();
-    const usersFormated = usersData.map(user => {
-    const findUser = usersMock.find(userMocked => userMocked.email === user.userEmail);
-
-      return findUser as User;
-    }).slice(0, 3);
-
-    return usersFormated;
+  ngOnDestroy(){
+    this.subscriptionTopMoviesPerCountry.unsubscribe();
+    this.subscriptionTopMoviesPerCategory.unsubscribe();
+    this.subscriptionTopMoviesGlobal.unsubscribe();
+    this.subscriptionGetUserInfos.unsubscribe();
   }
+
 }
