@@ -23,10 +23,13 @@ export class UsersService {
   }
 
   get getUserLogged(): Observable<User> {
-    return this.getUsers.pipe(
-      map(users => {
-        const { email } = JSON.parse(localStorage.getItem('Netflix_user') as string);
-        const user = users.find(user => user.email === email) as User;
+    return this.localStorageService.getUserLoggedLocalStorage.pipe(
+      switchMap(userLogged => {
+       return forkJoin([of(userLogged), this.getUsers])
+      }),
+      map(([userLogged, usersList]) => {
+        const { email } = userLogged;
+        const user = usersList.find(user => user.email === email) as User;
 
         return user;
       })

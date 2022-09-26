@@ -23,19 +23,7 @@ export class MetricsService {
   ) { }
 
   get getMetrics(): Observable<Metrics[]> {
-    return this.http.get<Metrics[]>('assets/database/metrics.json').pipe(
-      map(metrics => {
-        const hasMetrics = localStorage.getItem('metrics');
-
-        if (!hasMetrics) {
-          localStorage.setItem('metrics', JSON.stringify(metrics));
-
-          return metrics;
-        }
-
-        return JSON.parse(hasMetrics);
-      })
-    );
+    return this.localStorageService.getLocalStorageMetrics;
   }
 
   getMoviesByCategory(category: string): Observable<Movie[]> {
@@ -158,19 +146,8 @@ export class MetricsService {
       }),
       map(([userLocalStorage, usersLocalStorage]) => {
         const { email } = userLocalStorage;
-        let usersDataLocalStorage: UserData[] = usersLocalStorage;
-
-        const hasUser = usersLocalStorage
-          .find((user: UserData) => user.userEmail === email);
-
-        if (!hasUser) {
-          const userFormated = {
-            userEmail: email,
-            movies: []
-          }
-
-          usersDataLocalStorage.push(userFormated);
-        }
+        let usersDataLocalStorage: UserData[] = this.localStorageService
+        .verifyHasUserInLocalStorage(email, usersLocalStorage);
 
         const userIndex = usersDataLocalStorage
           .findIndex((user: UserData) => user.userEmail === email);
@@ -194,22 +171,23 @@ export class MetricsService {
   }
 
   get getUsersMoreWatchedMovies(): Observable<UserWatchedMoviesCount[]> {
-    const users = localStorage.getItem('users')
-      ? JSON.parse(localStorage.getItem('users') as string) : [];
+    return this.localStorageService.getUsersLocalStorage.pipe(
+      map(users => {
+        const userMoviesWatchedCount = users.map((user: UserData) => {
+          const totalMoviesWatchedCount = user.movies
+            .reduce((acc, act) => acc + act.views, 0);
 
-    const userMoviesWatchedCount = users.map((user: UserData) => {
-      const totalMoviesWatchedCount = user.movies
-        .reduce((acc, act) => acc + act.views, 0);
+          return {
+            userEmail: user.userEmail,
+            moviesWatchedCount: totalMoviesWatchedCount
+          }
+        })
 
-      return {
-        userEmail: user.userEmail,
-        moviesWatchedCount: totalMoviesWatchedCount
-      }
-    })
-
-    const sortUserMoviesWatchedCount = userMoviesWatchedCount
-      .sort(sortUserMoviesCountArr);
-    return of(sortUserMoviesWatchedCount);
+        const sortUserMoviesWatchedCount = userMoviesWatchedCount
+          .sort(sortUserMoviesCountArr);
+        return sortUserMoviesWatchedCount;
+      })
+    );
   }
 
   get topUsersMoreWatchMovies(): Observable<User[]> {
