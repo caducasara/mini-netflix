@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { Categories } from '../enums/categories';
@@ -16,7 +15,6 @@ import { UsersService } from './users.service';
 export class MetricsService {
 
   constructor(
-    private http: HttpClient,
     private userService: UsersService,
     private localStorageService: LocalStorageService,
     private dbService: DbService
