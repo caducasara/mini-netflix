@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { getUsers } from 'src/app/database/Users';
+import { getUsers } from 'src/app/tests/mocks/Users';
 import { UserSingIn } from 'src/app/interfaces/User';
 
 @Injectable({

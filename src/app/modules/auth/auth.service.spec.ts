@@ -5,16 +5,9 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let mockRouter = {
-    navigate: jasmine.createSpy('navigate')
-  };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: Router, useValue: mockRouter }
-      ]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
 
@@ -43,7 +36,6 @@ describe('AuthService', () => {
     const hasUserIsLocalStorage = localStorage.getItem('Netflix_user');
 
     expect(hasUserIsLocalStorage).toBeFalsy();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/signin']);
   });
 
   it('(U) getUserAuthenticated() -> Should return isUserAuthenticated', () => {

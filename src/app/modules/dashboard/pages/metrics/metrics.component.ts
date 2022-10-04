@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, Subscription } from 'rxjs';
-import { getUsers } from 'src/app/database/Users';
+import { Subscription } from 'rxjs';
 import { Movie, MoviesCategories, TopMoviesCountry } from 'src/app/interfaces/Movie';
 import { User } from 'src/app/interfaces/User';
 import { NetflixService } from 'src/app/service/netflix.service';

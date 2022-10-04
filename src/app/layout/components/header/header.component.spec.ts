@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatMenuModule } from '@angular/material/menu';
 import { Countries } from 'src/app/enums/countries';
 import { NetflixService } from 'src/app/service/netflix.service';
 
@@ -8,11 +11,15 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let netflixService: NetflixService;
+  let http: HttpClient;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ HeaderComponent ],
-      providers: [NetflixService]
+      imports: [
+        HttpClientTestingModule,
+        MatMenuModule
+      ]
     })
     .compileComponents();
 
@@ -23,17 +30,8 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     netflixService = TestBed.inject(NetflixService);
+    http = TestBed.inject(HttpClient);
     component = fixture.componentInstance;
-    spyOn(netflixService, 'getUserLogged').and.returnValue({
-      id: 1,
-      firstName: 'firtName-mock',
-      lastName: 'lastName-mock',
-      email: 'email-mock',
-      picture: 'picture-mock',
-      password: 'password-mock',
-      token: 'token-mock',
-      country: Countries.Brazil,
-    });
 
     fixture.detectChanges();
   });

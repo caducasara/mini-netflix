@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Countries } from 'src/app/enums/countries';
 import { NetflixService } from 'src/app/service/netflix.service';
@@ -12,6 +13,9 @@ describe('ProfileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
+      imports: [
+        HttpClientTestingModule
+      ],
       providers: [NetflixService]
     })
     .compileComponents();
@@ -24,16 +28,6 @@ describe('ProfileComponent', () => {
     fixture = TestBed.createComponent(ProfileComponent);
     netflixService = TestBed.inject(NetflixService);
     component = fixture.componentInstance;
-    spyOn(netflixService, 'getUserLogged').and.returnValue({
-      id: 1,
-      firstName: 'firtName-mock',
-      lastName: 'lastName-mock',
-      email: 'email-mock',
-      picture: 'picture-mock',
-      password: 'password-mock',
-      token: 'token-mock',
-      country: Countries.Brazil,
-    });
 
     fixture.detectChanges();
   });

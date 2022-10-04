@@ -1,109 +1,34 @@
 import { TestBed } from '@angular/core/testing';
-import { getMovies } from '../tests/mocks/Movies';
-import { getUsers } from '../database/Users';
-import { User, UserWatchedMoviesCount } from '../interfaces/User';
-
+import { UserData } from '../interfaces/User';
 import { NetflixService } from './netflix.service';
+import { MetricsService } from './metrics.service';
+import { of } from 'rxjs';
+import { DbService } from './db.service';
+import { UsersService } from './users.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LocalStorageService } from './local-storage.service';
 
 describe('NetflixService', () => {
   let service: NetflixService;
-
-  const categoriesMock = ['Animation', 'Action', 'Drama', 'Fantasy', 'Comedy'];
-
-  const moviesMock = [
-    {
-      id: 1,
-      title: 'mock-title',
-      folder: 'mock-folder',
-      synopsi: 'mock-synopsi',
-      year: 'mock-year',
-      category: 'Fantasy',
-      trailer: 'mock-trailer',
-      watchedNumber: {
-        total: 3,
-        countries: {
-          Brazil: 1,
-          USA: 1,
-          Argentina: 1
-        }
-      }
-    },
-    {
-      id: 2,
-      title: 'mock-title',
-      folder: 'mock-folder',
-      synopsi: 'mock-synopsi',
-      year: 'mock-year',
-      category: 'Comedy',
-      trailer: 'mock-trailer',
-      watchedNumber: {
-        total: 6,
-        countries: {
-          Brazil: 2,
-          USA: 2,
-          Argentina: 2
-        }
-      }
-    },
-    {
-      id: 3,
-      title: 'mock-title',
-      folder: 'mock-folder',
-      synopsi: 'mock-synopsi',
-      year: 'mock-year',
-      category: 'Action',
-      trailer: 'mock-trailer',
-      watchedNumber: {
-        total: 9,
-        countries: {
-          Brazil: 3,
-          USA: 3,
-          Argentina: 3
-        }
-      }
-    },
-    {
-      id: 4,
-      title: 'mock-title',
-      folder: 'mock-folder',
-      synopsi: 'mock-synopsi',
-      year: 'mock-year',
-      category: 'Comedy',
-      trailer: 'mock-trailer',
-      watchedNumber: {
-        total: 12,
-        countries: {
-          Brazil: 4,
-          USA: 4,
-          Argentina: 4
-        }
-      }
-    },
-    {
-      id: 5,
-      title: 'mock-title',
-      folder: 'mock-folder',
-      synopsi: 'mock-synopsi',
-      year: 'mock-year',
-      category: 'Fantasy',
-      trailer: 'mock-trailer',
-      watchedNumber: {
-        total: 15,
-        countries: {
-          Brazil: 5,
-          USA: 5,
-          Argentina: 5
-        }
-      }
-    },
-  ];
+  let metricsService: MetricsService;
+  let dbService: DbService;
+  let userService: UsersService;
+  let localStorageService: LocalStorageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ]
+    });
     service = TestBed.inject(NetflixService);
+    metricsService = TestBed.inject(MetricsService);
+    dbService = TestBed.inject(DbService);
+    userService = TestBed.inject(UsersService);
+    localStorageService = TestBed.inject(LocalStorageService);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     localStorage.removeItem('Netflix_user');
     localStorage.removeItem('users');
   })
@@ -112,168 +37,95 @@ describe('NetflixService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('(U) getMoviesByCategory() -> Should return movies By category and sorted', () => {
-    const movies = service.getMoviesByCategory('Animation');
+  it('(U) getMoviesByCategory() -> Should return Obeservable Movie array', () => {
+    const spyGetMoviesByCategory = spyOn(metricsService, 'getMoviesByCategory')
+    .and.returnValue(of([]));
 
-    movies.forEach(movie => {
-      expect(movie.category).toEqual('Animation');
-    });
+    service.getMoviesByCategory('Animation');
 
-    expect(movies[0].watchedNumber.total > movies[1].watchedNumber.total).toBeTruthy();
+    expect(spyGetMoviesByCategory).toHaveBeenCalledWith('Animation');
   });
 
-  it('(U) getCategoriesMovies() -> Should return movies list per category and sorted', () => {
-    const moviesPerCategory = service.getCategoriesMovies();
+  it('(U) getCategoriesMovies() -> Should return Obeservable Movie List Categories array', () => {
+    const spyGetCategoriesMoviesMetrics = spyOnProperty(metricsService, 'getCategoriesMovies', 'get');
 
-    categoriesMock.forEach(category => {
-      const validate = moviesPerCategory.some(moviesCategory => moviesCategory.name === category);
+    service.getCategoriesMovies;
 
-      expect(validate).toBeTruthy();
-    });
+    expect(spyGetCategoriesMoviesMetrics).toHaveBeenCalled();
   });
 
+  it('(U) getTopMoviesGlobal() -> Should return Obeservable Movie array', () => {
+    const spyGetTopMoviesGlobalMetrics = spyOnProperty(metricsService, 'getTopMoviesGlobal', 'get');
 
-  it('(U) getMoviesSort() -> Should return movies list sorted', () => {
-    const usersLocalStorageMock = [
-      {
-        userEmail: 'user1@teste.com',
-        movies: [
-          {
-            movieId: 1,
-            views: 2
-          }
-        ]
-      }
-    ]
+    service.getTopMoviesGlobal;
 
-    spyOn(Storage.prototype, 'getItem').and.returnValue(JSON.stringify(usersLocalStorageMock));
-
-    const moviesSorted = service.getMoviesSort(moviesMock);
-    const findMovie = moviesSorted.find(movie => movie.id === 1);
-
-    expect(findMovie?.watchedNumber.total === 5).toBeTruthy();
+    expect(spyGetTopMoviesGlobalMetrics).toHaveBeenCalled();
   });
 
-  it('(U) getTopMoviesGlobal() -> Should return top movies sorted by watched number', () => {
-    const getMoviesSortedSpy = spyOn(service, 'getMoviesSort').and.returnValue(moviesMock);
-    const getTopMoviesGlobalReturn = service.getTopMoviesGlobal();
+  it('(U) getTopMoviesPerCountry -> Should return Obeservable Top Movie per Country array', () => {
+    const spyGetTopMoviesPerCountryMetrics = spyOnProperty(metricsService, 'getTopMoviesPerCountry', 'get');
 
-    expect(getMoviesSortedSpy).toHaveBeenCalled();
-    expect(getTopMoviesGlobalReturn[0].watchedNumber.total).toEqual(15);
-    expect(getTopMoviesGlobalReturn[0].watchedNumber.total !== 15).toBeFalsy();
-  });
+    service.getTopMoviesPerCountry;
 
-  it('(U) getTopMoviesPerCountry -> Should return top movies per country and sorte by watched number', () => {
-    const getMoviesSortedSpy = spyOn(service, 'getMoviesSort').and.returnValue(moviesMock);
-    const getTopMoviesPerCountryReturn = service.getTopMoviesPerCountry();
-    const topBr = getTopMoviesPerCountryReturn.find(country => country.countryName === 'Brazil');
-    const topUSA = getTopMoviesPerCountryReturn.find(country => country.countryName === 'USA');
-    const topArg = getTopMoviesPerCountryReturn.find(country => country.countryName === 'Argentina');
-
-    expect(getMoviesSortedSpy).toHaveBeenCalled();
-    expect(topBr?.movies[0].id).toEqual(5);
-    expect(topUSA?.movies[0].id).toEqual(5);
-    expect(topArg?.movies[0].id).toEqual(5);
+    expect(spyGetTopMoviesPerCountryMetrics).toHaveBeenCalled();
   });
 
   it('(U) updateMoviesWatched -> Should udpdated user actions', () => {
-    const userLocalStorageMock = { email: 'user1@teste.com' };
-    const mockUserMoviesWatched = [
-      {
-        userEmail: 'user1@teste.com',
-        movies: [
-          {
-            movieId: 1,
-            views: 2
-          }
-        ]
-      }
-    ];
+    const spyUpdatedMoviesWatched = spyOn(metricsService, 'updateMoviesWatchedMetrics')
+    .and.returnValue(of([] as UserData[]));
+    const spyUpdateMoviesMetricsLocalStorage = spyOn(localStorageService, 'updatedMoviesWatchedLocalStorage');
 
-    localStorage.setItem('Netflix_user', JSON.stringify(userLocalStorageMock));
-    localStorage.setItem('users', JSON.stringify(mockUserMoviesWatched));
     service.updateMoviesWatched(1);
 
-    const updated = JSON.parse(localStorage.getItem('users') as string);
-    const { email } = userLocalStorageMock;
-    const findUserAction = updated.findIndex((user: UserWatchedMoviesCount) => user.userEmail === email);
-
-    expect(updated[findUserAction].movies.length).toEqual(1);
-    expect(updated[findUserAction].movies[0].views).toEqual(3);
+    expect(spyUpdatedMoviesWatched).toHaveBeenCalledWith(1);
+    expect(spyUpdateMoviesMetricsLocalStorage).toHaveBeenCalled();
   });
 
-  it('(U) updateMoviesWatched -> Should create user movies watched data in localStorage', () => {
-    const userLocalStorageMock = { email: 'userMock@teste.com' };
+  it('(U) getUserLogged -> Should return the user logged observable', () => {
+    const spyGetUserLogged = spyOnProperty(userService, 'getUserLogged', 'get');
 
-    localStorage.setItem('Netflix_user', JSON.stringify(userLocalStorageMock));
-    service.updateMoviesWatched(1);
+    service.getUserLogged;
 
-    const updated = JSON.parse(localStorage.getItem('users') as string);
-    const { email } = userLocalStorageMock;
-    const findUserAction = updated.findIndex((user: UserWatchedMoviesCount) => user.userEmail === email);
-    const userMoviesWatched = updated[findUserAction].movies;
-
-    expect(updated[findUserAction].userEmail).toEqual(email);
-    expect(userMoviesWatched.length).toEqual(1);
-    expect(userMoviesWatched[0].movieId).toEqual(1);
+    expect(spyGetUserLogged).toHaveBeenCalled();
   });
 
-  it('(U) getUserLogged -> Should return the user logged', () => {
-    const userLocalStorageMock = { email: 'user1@teste.com' };
+  it('(U) getMovieById -> Should return the movie correct observable', () => {
+    const spyGetMovieById = spyOn(dbService, 'getMovieById');
 
-    localStorage.setItem('Netflix_user', JSON.stringify(userLocalStorageMock));
-    const userLogged = service.getUserLogged();
+    service.getMovieById(1);
 
-   expect(userLogged.email).toEqual(userLocalStorageMock.email);
+    expect(spyGetMovieById).toHaveBeenCalledWith(1);
   });
 
-  it('(U) getMovieById -> Should return the movie correct', () => {
-    const movieSearch = service.getMovieById(3);
-    const expectedResult = getMovies().find(movie => movie.id === 3);
+  it('(U) getUsersMoreWatchedMovies -> Should return the user who more watched movies sorted observable', () => {
+    const spyGetUsersMoreWatchedMoviesMetrics = spyOnProperty(metricsService, 'getUsersMoreWatchedMovies', 'get');
 
-    expect(movieSearch.title).toEqual(expectedResult?.title as string);
-    expect(movieSearch.id).toEqual(expectedResult?.id as number);
-    expect(movieSearch.category).toEqual(expectedResult?.category as string);
+    service.getUsersMoreWatchedMovies;
+
+    expect(spyGetUsersMoreWatchedMoviesMetrics).toHaveBeenCalledWith();
   });
 
-  it('(U) getUsersMoreWatchedMovies -> Should return the user who more watched movies sorted', () => {
-   const usersDataMock = [
-      {
-        userEmail: 'user1@teste.com',
-        movies: [
-          {
-            movieId: 1,
-            views: 2
-          }
-        ]
-      },
-      {
-        userEmail: 'user2@teste.com',
-        movies: [
-          {
-            movieId: 1,
-            views: 3
-          },
-          {
-            movieId: 2,
-            views: 1
-          }
-        ]
-      }
-    ];
+  it('(U) topUsersMoreWatchMovies -> Should return top user more watched movie obervable', () => {
+    const spyGetTopUsersMoreWatchMoviesMetrics = spyOnProperty(metricsService, 'topUsersMoreWatchMovies', 'get');
 
-    localStorage.setItem('users', JSON.stringify(usersDataMock));
+    service.topUsersMoreWatchMovies;
 
-    const userMoreWatchedMovies = service.getUsersMoreWatchedMovies();
-
-    expect(userMoreWatchedMovies[0].userEmail).toEqual('user2@teste.com');
-    expect(userMoreWatchedMovies.length).toEqual(2);
+    expect(spyGetTopUsersMoreWatchMoviesMetrics).toHaveBeenCalledWith();
   });
 
-  it('(U) getUsersMoreWatchedMovies -> Should return the user who more watched movies empty', () => {
-    const userMoreWatchedMovies = service.getUsersMoreWatchedMovies();
+  it('(U) getMoviesMoreWatchedByUser -> Should return movies more watched by user obervable', () => {
+    const spyGetMoviesMoraWatchedByUser = spyOn(userService, 'getMoviesMoreWatchedByUser');
 
-    expect(userMoreWatchedMovies).toEqual([]);
-    expect(userMoreWatchedMovies.length).toEqual(0);
-   });
+    service.getMoviesMoreWatchedByUser('user@email.com');
+
+    expect(spyGetMoviesMoraWatchedByUser).toHaveBeenCalledWith('user@email.com');
+  });
+
+  it('(U) getMetricsById -> Should return movie metrics by movie id obervable', () => {
+    const spyGetMetricsById = spyOn(metricsService, 'getMetricsById');
+
+    service.getMetricsById(30);
+
+    expect(spyGetMetricsById).toHaveBeenCalledWith(30);
+  });
 });
