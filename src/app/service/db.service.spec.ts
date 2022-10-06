@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
-import { Movie } from '../interfaces/Movie';
+import { of } from 'rxjs';
 import { getMovies } from '../tests/mocks/Movies';
-
 import { DbService } from './db.service';
 
 describe('DbService', () => {

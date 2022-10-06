@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Movie } from 'src/app/interfaces/Movie';
@@ -13,16 +13,15 @@ import { NetflixService } from 'src/app/service/netflix.service';
 })
 export class PlayerComponent implements OnInit {
 
-  movie!: Movie;
-  movieUrlSafe!:SafeResourceUrl;
+  movie: Movie = {} as Movie;
   totalMovieWatched!: number;
+  movieUrl!: string;
 
   subscriptionMovie: Subscription = new Subscription();
 
   constructor(
     private netflix: NetflixService,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer,
     private location: Location
   ) { }
 
@@ -34,11 +33,10 @@ export class PlayerComponent implements OnInit {
     this.subscriptionMovie.add(
       this.netflix.getMovieById(Number(id)).subscribe(movie => {
         this.movie = movie;
+        this.movieUrl = movie.trailer;
         this.netflix.getMetricsById(Number(id)).subscribe(totalMovieWatched => {
           this.totalMovieWatched = totalMovieWatched;
         });
-        this.movieUrlSafe = this.sanitizer
-          .bypassSecurityTrustResourceUrl(this.movie.trailer);
       })
     );
   }

@@ -41,4 +41,16 @@ export const getUsersMoreWatchedMovies = () => ([
     userEmail: 'user2@teste.com',
     moviesWatchedCount: 5
   }
-])
+]);
+
+export const getUserMock = () => (
+  {
+    "id": 1,
+    "firstName": "User",
+    "lastName": "1",
+    "email": "user1@teste.com",
+    "password": "teste1",
+    "picture": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png",
+    "country": "Brazil"
+  }
+)

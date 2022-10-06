@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { Metrics } from '../interfaces/Movie';
 import { getMetrics } from '../tests/mocks/Metrics';
 import { getMovies } from '../tests/mocks/Movies';
 import { getMoviesByCategory } from '../tests/mocks/moviesByCategory';
@@ -45,7 +46,7 @@ describe('MetricsService', () => {
 
   it('(U) getMetrics -> Should return metrics observable correctly', done => {
     spyOnProperty(localStorageService, 'getLocalStorageMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
 
     const metrics = service.getMetrics;
 
@@ -63,7 +64,7 @@ describe('MetricsService', () => {
 
   it('(U) getMoviesByCategory -> Should return movies per category observable', done => {
     spyOnProperty(dbService, 'getMovies', 'get')
-    .and.returnValue(of(moviesMock));
+      .and.returnValue(of(moviesMock));
 
      const moviesCategoryAction = service.getMoviesByCategory('Action');
 
@@ -79,7 +80,7 @@ describe('MetricsService', () => {
 
   it('(U) getCategoriesMovies -> Should return Metrics Categories Movies Observable', done => {
     const spyGetMetrics = spyOnProperty(service, 'getMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
     const spyGetMoviesCategories = spyOn(service, 'getMoviesByCategory').and.returnValue(of(moviesCategoryMock))
 
     const moviesListSortedByCategory = service.getCategoriesMovies;
@@ -100,9 +101,9 @@ describe('MetricsService', () => {
 
   it('(U) getTopMoviesGlobal -> Should return Metrics Categories Movies Observable', done => {
     const spyGetMetrics = spyOnProperty(service, 'getMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
     const spyGetMovies = spyOnProperty(dbService, 'getMovies', 'get')
-    .and.returnValue(of(moviesMock));
+      .and.returnValue(of(moviesMock));
 
     service.getTopMoviesGlobal.subscribe(
       topMoviesGlobal => {
@@ -123,9 +124,9 @@ describe('MetricsService', () => {
 
   it('(U) getTopMoviesPerCountry -> Should return top movies per country observable', done => {
     const spyGetMovies = spyOnProperty(dbService, 'getMovies', 'get')
-    .and.returnValue(of(moviesMock));
+      .and.returnValue(of(moviesMock));
     const spyGetMetrics = spyOnProperty(service, 'getMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
     const topMoviesPerCountry = service.getTopMoviesPerCountry;
 
     topMoviesPerCountry.subscribe(
@@ -142,16 +143,16 @@ describe('MetricsService', () => {
 
   it('(U) updatedMetrics ->  Should updated Metrics', done => {
     const spyGetMetrics = spyOnProperty(service, 'getMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
     const spyGetUsers = spyOnProperty(usersService, 'getUsers', 'get')
-    .and.returnValue(of(usersMock));
+      .and.returnValue(of(usersMock));
 
     const updatedMetrics = service.updatedMetrics(1, 'user1@teste.com');
 
     updatedMetrics.subscribe(
       metrics => {
         const findMetricsUpdated = metrics
-        .find(metricsUpdated => metricsUpdated.movieId === 1);
+          .find(metricsUpdated => metricsUpdated.movieId === 1);
 
         expect(findMetricsUpdated).toBeTruthy();
         expect(findMetricsUpdated?.watchedNumber.total).toEqual(21);
@@ -167,18 +168,20 @@ describe('MetricsService', () => {
 
   it('(U) updateMoviesWatchedMetrics ->  Should updated user movies watched metrics when user data exists', done => {
     const spyGetUserLogged = spyOnProperty(localStorageService, 'getUserLoggedLocalStorage', 'get')
-    .and.returnValue(of(userLogedMock));
+      .and.returnValue(of(userLogedMock));
     const spyGetUsers = spyOnProperty(localStorageService, 'getUsersLocalStorage', 'get')
-    .and.returnValue(of(usersDataMock));
+      .and.returnValue(of(usersDataMock));
+    const spyUpdatedMetrics = spyOn(service, 'updatedMetrics').and.returnValue(of([] as Metrics[]));
+    const spyUpdateLocalStorageMetrics = spyOn(localStorageService, 'updateLocalStorageMetrics');
 
     const updatedUserMoviesWatched = service.updateMoviesWatchedMetrics(1);
 
     updatedUserMoviesWatched.subscribe(
       usersMoviesWatched => {
         const getMovieUserMovieWatched = usersMoviesWatched
-        .find(data => data.userEmail === userLogedMock.email);
+          .find(data => data.userEmail === userLogedMock.email);
         const findMovieUpdated = getMovieUserMovieWatched?.movies
-        .find(movie => movie.movieId === 1);
+          .find(movie => movie.movieId === 1);
 
         expect(getMovieUserMovieWatched).toBeTruthy();
         expect(findMovieUpdated?.views).toBeTruthy();
@@ -190,23 +193,25 @@ describe('MetricsService', () => {
 
     expect(spyGetUserLogged).toHaveBeenCalled();
     expect(spyGetUsers).toHaveBeenCalled();
+    expect(spyUpdatedMetrics).toHaveBeenCalled();
+    expect(spyUpdateLocalStorageMetrics).toHaveBeenCalled();
   });
 
   it('(U) updateMoviesWatchedMetrics ->  Should updated user movies watched metrics when user data not exists', done => {
     const userLoggedMockTest = { email: 'user3@teste.com', password: 'teste3' };
     const spyGetUserLogged = spyOnProperty(localStorageService, 'getUserLoggedLocalStorage', 'get')
-    .and.returnValue(of(userLoggedMockTest));
+      .and.returnValue(of(userLoggedMockTest));
     const spyGetUsers = spyOnProperty(localStorageService, 'getUsersLocalStorage', 'get')
-    .and.returnValue(of(usersDataMock));
+      .and.returnValue(of(usersDataMock));
 
     const updatedUserMoviesWatched = service.updateMoviesWatchedMetrics(1);
 
     updatedUserMoviesWatched.subscribe(
       usersMoviesWatched => {
         const getMovieUserMovieWatched = usersMoviesWatched
-        .find(data => data.userEmail === userLoggedMockTest.email);
+          .find(data => data.userEmail === userLoggedMockTest.email);
         const findMovieUpdated = getMovieUserMovieWatched?.movies
-        .find(movie => movie.movieId === 1);
+          .find(movie => movie.movieId === 1);
 
         expect(getMovieUserMovieWatched).toBeTruthy();
         expect(findMovieUpdated?.views).toBeTruthy();
@@ -222,7 +227,7 @@ describe('MetricsService', () => {
 
   it('(U) getUsersMoreWatchedMovies -> Should return top users More Warched Movies metrics', done => {
     const spyGetUsersLocalStorage = spyOnProperty(localStorageService, 'getUsersLocalStorage', 'get')
-    .and.returnValue(of(usersDataMock));
+      .and.returnValue(of(usersDataMock));
 
     const getUsersMoreWatchdeMovies = service.getUsersMoreWatchedMovies;
 
@@ -239,9 +244,9 @@ describe('MetricsService', () => {
 
   it('(U) topUsersMoreWatchMovies -> Should return top users More Warched Movies', done => {
     const spyGetUsersMoreWatchedMovies = spyOnProperty(service, 'getUsersMoreWatchedMovies', 'get')
-    .and.returnValue(of(topUsersMoreWatchedMoviesMock));
+      .and.returnValue(of(topUsersMoreWatchedMoviesMock));
     const spyGetUsers = spyOnProperty(usersService, 'getUsers', 'get')
-    .and.returnValue(of(usersMock));
+      .and.returnValue(of(usersMock));
 
     const getTopUsersMoreWatchedMovies = service.topUsersMoreWatchMovies;
 
@@ -260,7 +265,7 @@ describe('MetricsService', () => {
 
   it('(U) getMetricsById -> Should return metrics movie by id', done => {
     const spyGetMetrics = spyOnProperty(service, 'getMetrics', 'get')
-    .and.returnValue(of(metricsMock));
+      .and.returnValue(of(metricsMock));
     const getMetricsById = service.getMetricsById(2);
 
     getMetricsById.subscribe(

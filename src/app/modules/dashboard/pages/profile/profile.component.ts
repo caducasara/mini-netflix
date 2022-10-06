@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { Movie } from 'src/app/interfaces/Movie';
 import { User } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/modules/auth/auth.service';
-import { DbService } from 'src/app/service/db.service';
 import { NetflixService } from 'src/app/service/netflix.service';
 
 @Component({

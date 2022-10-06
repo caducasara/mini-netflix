@@ -51,7 +51,8 @@ describe('UsersService', () => {
   });
 
   it('(U) getUserLogged -> Should return user logged observable', done => {
-    spyOnProperty(localStorageService, 'getUserLoggedLocalStorage', 'get').and.returnValue(of(userMock));
+    spyOnProperty(localStorageService, 'getUserLoggedLocalStorage', 'get')
+      .and.returnValue(of(userMock));
     spyOn(http, 'get').and.returnValue(of(usersDataMock));
 
     const userLogged = service.getUserLogged;
@@ -77,7 +78,7 @@ describe('UsersService', () => {
 
   it('(U) getMoviesMoreWatchedByUser -> Should return user movies more watched observable get by email search', done => {
     spyOnProperty(localStorageService, 'getUsersLocalStorage', 'get')
-    .and.returnValue(of(usersDataLocalStorageMock));
+      .and.returnValue(of(usersDataLocalStorageMock));
 
     spyOnProperty(dbService, 'getMovies', 'get').and.returnValue(of(moviesMock));
 
