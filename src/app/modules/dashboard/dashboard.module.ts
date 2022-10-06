@@ -9,6 +9,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { PlayerComponent } from './pages/player/player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { MatIconModule } from '@angular/material/icon';
+import { SafePipe } from './pages/player/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     MetricsComponent,
     ProfileComponent,
-    PlayerComponent
+    PlayerComponent,
+    SafePipe
   ],
   imports: [
     CommonModule,

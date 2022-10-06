@@ -39,7 +39,7 @@ describe('NetflixService', () => {
 
   it('(U) getMoviesByCategory() -> Should return Obeservable Movie array', () => {
     const spyGetMoviesByCategory = spyOn(metricsService, 'getMoviesByCategory')
-    .and.returnValue(of([]));
+      .and.returnValue(of([]));
 
     service.getMoviesByCategory('Animation');
 
@@ -72,7 +72,7 @@ describe('NetflixService', () => {
 
   it('(U) updateMoviesWatched -> Should udpdated user actions', () => {
     const spyUpdatedMoviesWatched = spyOn(metricsService, 'updateMoviesWatchedMetrics')
-    .and.returnValue(of([] as UserData[]));
+      .and.returnValue(of([] as UserData[]));
     const spyUpdateMoviesMetricsLocalStorage = spyOn(localStorageService, 'updatedMoviesWatchedLocalStorage');
 
     service.updateMoviesWatched(1);
