@@ -7,6 +7,13 @@
   </header>
   <form class="container_form" [formGroup]="signInForm" (ngSubmit)="signInSubmit()">
     <h1>Sign In</h1>
+    <div class="credentials">
+      <span>
+        If you don't have a login user, access this
+        <a href="https://github.com/caducasara/mini-netflix" target="_blank">link </a>
+        to read the documentation and use a test user.
+      </span>
+    </div>
     <div class="input_container">
       <label for="email">E-mail:</label>
       <input
