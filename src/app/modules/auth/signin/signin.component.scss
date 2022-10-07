@@ -92,6 +92,19 @@
   min-height: 114px;
 }
 
+.credentials {
+   span {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 14px;
+
+    a {
+      color: #FFF;
+      text-decoration: underline;
+    }
+   }
+}
+
 @media screen and (max-width: 425px) {
   .container_form {
     padding: 32px 16px;
