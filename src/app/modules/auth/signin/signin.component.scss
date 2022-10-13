@@ -1,6 +1,6 @@
 .container {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
   padding: 0 16px;
@@ -106,8 +106,13 @@
 }
 
 @media screen and (max-width: 425px) {
+  .container {
+    padding-bottom: 32px;
+  }
+
   .container_form {
     padding: 32px 16px;
+    margin-top: 90px;
   }
 }
 
